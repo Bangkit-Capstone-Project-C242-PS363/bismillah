@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Sign Master</string>
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="welcome">Welcome!</string>
+    <string name="username">UserName</string>
+    <string name="translate">Translate</string>
+    <string name="quiz">Quiz</string>
+    <string name="study">Study</string>
+    <string name="news">News</string>
+    <string name="news_name">News Title</string>
+    <string name="tagline_study">Learn to Speak with Hands\nConnect with Hearts!</string>
+    <string name="learn_material">Learn Material</string>
+    <string name="material_title">Material Title</string>
+    <string name="material_list_title">Material List Title</string>
+    <string name="quiz_title">Quiz Title</string>
+    <string name="tagline_quiz">Challenge Your Knowledge,\nAchieve Your Best!</string>
+    <string name="quiz_material">Quiz Material</string>>
+    <string name="lets_quiz">Lets Quiz</string>
+    <string name="learn_first">Prepare to Learn</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="answer">Answer</string>
+    <string name="completed">Completed</string>
+    <string name="exit">Exit</string>
+    <string name="quiz_result">"Quiz Result"</string>
+    <string name="email">Email@email.com</string>
+    <string name="subscription">Subscription</string>
+    <string name="logout">Logout</string>
+    <string name="search">Search</string>
+</resources>
