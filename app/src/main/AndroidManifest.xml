@@ -13,10 +13,13 @@
         android:theme="@style/Theme.SignMaster"
         tools:targetApi="31">
         <activity
-            android:name=".ui.translate.TranslateActivity"
+            android:name=".ui.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name=".ui.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.translate.TranslateActivity"
             android:exported="false" />
         <activity
             android:name=".ui.quiz.quiz_material.QuizMaterialActivity"
@@ -26,9 +29,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.study.StudyActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.home.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.study.material_list.detail_material.Detail_Material"

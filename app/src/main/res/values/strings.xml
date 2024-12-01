@@ -28,4 +28,10 @@
     <string name="subscription">Subscription</string>
     <string name="logout">Logout</string>
     <string name="search">Search</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="dont_have_acc">Don\'t have an acccount? Register here</string>
+    <string name="full_name">Full Name</string>
+    <string name="alr_have_acc">Already have an account? Login</string>
+    <string name="register">Register</string>
 </resources>

@@ -40,7 +40,7 @@
         <ImageView
             android:id="@+id/baseTop"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:src="@drawable/top_base"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,6 +66,7 @@
             android:textColor="@color/dark_blue"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/baseTop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
