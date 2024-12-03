@@ -1,4 +1,4 @@
-package com.adira.storyapp.ui.customview
+package com.adira.signmaster.ui.custom_view
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import com.adira.storyapp.R
+import com.adira.signmaster.R
 
 class MyNameEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -39,7 +39,7 @@ class MyNameEditText @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        hint = "Masukkan Nama Anda"
+        hint = "Enter Your Name"
         setHintTextColor(ContextCompat.getColor(context, R.color.gray))
 
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START

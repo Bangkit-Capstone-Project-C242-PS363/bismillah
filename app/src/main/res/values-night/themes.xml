@@ -3,7 +3,7 @@
     <style name="Theme.SignMaster" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/yellow</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">@color/dark_blue</item>
 
 
         <!--        <item name="windowActionBar">false</item>-->

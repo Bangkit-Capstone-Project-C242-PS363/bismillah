@@ -1,4 +1,7 @@
 package com.adira.signmaster.data.pref
 
-class UserModel {
-}
+data class UserModel(
+    val name: String,
+    val token: String,
+    val isLogin: Boolean = false
+)

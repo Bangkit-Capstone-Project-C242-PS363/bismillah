@@ -1,4 +1,4 @@
-package com.adira.storyapp.ui.customview
+package com.adira.signmaster.ui.custom_view
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,7 +8,8 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import com.adira.storyapp.R
+import com.adira.signmaster.R
+
 class MyEmailEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : AppCompatEditText(context, attrs) {
@@ -21,7 +22,7 @@ class MyEmailEditText @JvmOverloads constructor(
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (!isValidEmail(s.toString())) {
-                    showError("Format email tidak valid")
+                    showError("Invalid email format")
                 } else {
                     clearError()
                 }
@@ -42,7 +43,7 @@ class MyEmailEditText @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        hint = "Masukkan Email Anda"
+        hint = "Email"
         setHintTextColor(ContextCompat.getColor(context, R.color.gray))
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }

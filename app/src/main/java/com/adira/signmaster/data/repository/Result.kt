@@ -1,4 +1,4 @@
-package com.adira.storyapp.data.api
+package com.adira.signmaster.data.repository
 
 sealed class Result<out R> {
     data class Success<out T>(val data: T) : Result<T>()

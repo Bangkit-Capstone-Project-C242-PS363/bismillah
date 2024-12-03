@@ -1,4 +1,4 @@
-package com.adira.storyapp.ui.customview
+package com.adira.signmaster.ui.custom_view
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import com.adira.storyapp.R
+import com.adira.signmaster.R
 
 class MyPasswordEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -21,7 +21,7 @@ class MyPasswordEditText @JvmOverloads constructor(
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (!isValidPassword(s.toString())) {
-                    showError("Password tidak boleh kurang dari 8 karakter")
+                    showError("Password cannot be less than 8 characters")
                 } else {
                     clearError()
                 }
@@ -41,7 +41,7 @@ class MyPasswordEditText @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        hint = "Masukkan Password Anda"
+        hint = "Password"
         setHintTextColor(ContextCompat.getColor(context, R.color.gray))
 
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START

@@ -34,4 +34,17 @@
     <string name="full_name">Full Name</string>
     <string name="alr_have_acc">Already have an account? Login</string>
     <string name="register">Register</string>
+    <string name="confirm_password">Confirm Password</string>
+
+    <string name="login_success">Anda Berhasil Masuk</string>
+    <string name="login_failed">Gagal untuk masuk. Silahkan cek email dan password kembali</string>
+
+    <string name="signup_success">Anda Berhasil Membuat Akun</string>
+    <string name="signup_failed">Gagal Membuat Akun. Silahkan coba lagi</string>
+
+    <string name="logout_verification">Apa anda yakin untuk keluar?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="logout_success">Anda berhasil keluar</string>s
+
 </resources>
