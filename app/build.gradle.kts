@@ -65,14 +65,11 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-<<<<<<< HEAD
     implementation("com.github.bumptech.glide:glide:4.16.0")
-=======
     // Retrofit for Networking
     implementation(libs.retrofit2.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
->>>>>>> 72aaff8 (Quiz)
 
     // Glide for Image Loading
     implementation(libs.glide)
