@@ -7,49 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.translate.TranslateActivity">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/flVideoContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/flVideoContainer"
+    <VideoView
+        android:id="@+id/vvSignLanguage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Placeholder -->
-        <ImageView
-            android:id="@+id/ivPlaceholder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/placeholder_image"
-            android:scaleType="centerCrop" />
-
-        <!-- VideoView -->
-        <VideoView
-            android:id="@+id/vvSignLanguage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
-
-<!--    <VideoView-->
-<!--        android:id="@+id/vvSignLanguage"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="300dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/vvSignLanguage"
+        app:layout_constraintEnd_toEndOf="@+id/vvSignLanguage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vvSignLanguage" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabCamera"
@@ -60,7 +37,6 @@
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flVideoContainer"
         app:srcCompat="@drawable/baseline_local_see_24"
         app:tint="@color/white"
         tools:ignore="ContentDescription" />
@@ -89,31 +65,47 @@
         android:background="@drawable/text_input_bg"
         android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
+            <!-- TextInputEditText -->
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_edit_text"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/search" />
+                android:hint="@string/search"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivSend"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
+            <!-- FloatingActionButton -->
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/ivSend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/baseline_search_24"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/baseline_search_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:backgroundTint="@color/yellow"
-                android:layout_marginTop="8dp"
                 app:tint="@color/white" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.textfield.TextInputLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

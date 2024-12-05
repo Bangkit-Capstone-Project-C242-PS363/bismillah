@@ -35,6 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+=======
 
         <activity
             android:name=".ui.translate.TranslateActivity"
@@ -72,3 +74,45 @@
             android:exported="false" />
 
     </application>
+>>>>>>> db304af (2)
+
+        <activity
+            android:name=".ui.translate.TranslateActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
+<<<<<<< HEAD
+        <activity
+            android:name=".ui.quiz.quiz_material.QuizMaterialActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.quiz.QuizActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.study.StudyActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.study.material_list.detail_material.DetailMaterialActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.study.material_list.MaterialListActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
+    </application>
+=======
+</manifest>
+>>>>>>> db304af (2)
