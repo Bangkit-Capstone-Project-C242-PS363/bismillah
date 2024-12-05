@@ -9,6 +9,8 @@ import retrofit2.http.POST
 interface ApiServiceMotion {
 
     @POST("tomotion")
-    fun sendMotionData(@Body data: MotionData): Call<ToMotionResponse>
+    fun sendMotionData(
+        @Body data: MotionData
+    ): Call<ToMotionResponse>
 
 }

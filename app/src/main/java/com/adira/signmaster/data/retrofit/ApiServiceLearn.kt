@@ -13,5 +13,8 @@ interface ApiServiceLearn {
     fun fetchChapters(): Call<ChapterListResponse>
 
     @GET("getmaterials/{chapterId}")
-    suspend fun fetchChapterDetails(@Path("chapterId") chapterId: String): Response<ChapterDetailResponse>
+    suspend fun fetchChapterDetails(
+        @Path("chapterId") chapterId: String
+    ): Response<ChapterDetailResponse>
+
 }

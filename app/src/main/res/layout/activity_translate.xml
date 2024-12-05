@@ -80,13 +80,13 @@
                 android:hint="@string/search"
                 android:imeOptions="actionDone"
                 android:inputType="text"
+                android:padding="8dp"
                 android:singleLine="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ivSend"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-            <!-- FloatingActionButton -->
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/ivSend"
                 android:layout_width="wrap_content"
