@@ -1,7 +1,6 @@
 package com.adira.signmaster.data.pref
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -20,11 +19,18 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
+    fun getEmail(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[EMAIL] ?: ""
+        }
+    }
+
     suspend fun saveSession(user: UserModel) {
         dataStore.edit { preferences ->
             preferences[USERNAME] = user.name
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
+            preferences[EMAIL] = user.email
         }
     }
 
@@ -39,7 +45,8 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             UserModel(
                 preferences[USERNAME] ?: "",
                 preferences[TOKEN_KEY] ?: "",
-                preferences[IS_LOGIN_KEY] == true
+                preferences[IS_LOGIN_KEY] == true,
+                preferences[EMAIL] ?: "",
             )
         }
     }
@@ -56,6 +63,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val USERNAME = stringPreferencesKey("username")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
+        private val EMAIL = stringPreferencesKey("email")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

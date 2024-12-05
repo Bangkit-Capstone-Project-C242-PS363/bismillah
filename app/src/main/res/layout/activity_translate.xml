@@ -7,13 +7,49 @@
     android:layout_height="match_parent"
     tools:context=".ui.translate.TranslateActivity">
 
-    <ImageView
-        android:id="@+id/ivSignLanguage"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/flVideoContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/placeholder_image" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/flVideoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Placeholder -->
+        <ImageView
+            android:id="@+id/ivPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/placeholder_image"
+            android:scaleType="centerCrop" />
+
+        <!-- VideoView -->
+        <VideoView
+            android:id="@+id/vvSignLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+<!--    <VideoView-->
+<!--        android:id="@+id/vvSignLanguage"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabCamera"
@@ -22,38 +58,25 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/yellow"
         app:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/ivSignLanguage"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flVideoContainer"
         app:srcCompat="@drawable/baseline_local_see_24"
         app:tint="@color/white"
         tools:ignore="ContentDescription" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabRepeat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/yellow"
-        app:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/fabCamera"
-        app:layout_constraintEnd_toEndOf="@+id/fabCamera"
-        app:layout_constraintStart_toStartOf="@+id/fabCamera"
-        app:srcCompat="@drawable/baseline_repeat_24"
-        app:tint="@color/white"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/tvSearchInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/answer"
-        android:textColor="@color/dark_blue"
-        android:textSize="18sp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-        app:layout_constraintEnd_toEndOf="@+id/ivSignLanguage"
-        app:layout_constraintStart_toStartOf="@+id/ivSignLanguage" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvSearchInput"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/poppins_bold"-->
+<!--        android:text="@string/answer"-->
+<!--        android:textColor="@color/dark_blue"-->
+<!--        android:textSize="18sp"-->
+<!--        android:layout_marginBottom="30dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/vvSignLanguage"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/vvSignLanguage" />-->
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -78,22 +101,19 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/search" />
 
-            <ImageView
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/ivSend"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/send_button_bg"
-                android:scaleType="centerInside"
-                android:src="@drawable/baseline_send_24"
+                android:src="@drawable/baseline_search_24"
+                app:backgroundTint="@color/yellow"
+                android:layout_marginTop="8dp"
                 app:tint="@color/white" />
+
         </RelativeLayout>
     </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

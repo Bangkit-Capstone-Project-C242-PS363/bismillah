@@ -1,4 +1,7 @@
 package com.adira.signmaster.data.response
 
-class ToMotionResponse {
-}
+data class ToMotionResponse(
+    val error: Boolean,
+    val message: String,
+    val url: String
+)

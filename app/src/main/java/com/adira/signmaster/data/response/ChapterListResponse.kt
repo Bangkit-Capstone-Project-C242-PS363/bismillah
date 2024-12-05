@@ -1,12 +1,12 @@
 package com.adira.signmaster.data.response
 
-data class LearnResponse(
+data class ChapterListResponse(
 	val error: Boolean,
 	val message: String,
-	val data: List<LearnChapter>
+	val data: List<Chapter>
 )
 
-data class LearnChapter(
+data class Chapter(
 	val id: Int,
 	val title: String,
 	val icon_url: String

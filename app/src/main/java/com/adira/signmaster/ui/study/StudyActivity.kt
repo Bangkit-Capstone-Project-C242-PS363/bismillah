@@ -1,20 +1,21 @@
 package com.adira.signmaster.ui.study
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adira.signmaster.R
+import androidx.lifecycle.Observer
 import com.adira.signmaster.databinding.ActivityStudyBinding
+import com.adira.signmaster.ui.study.material_list.MaterialListActivity
 
 class StudyActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStudyBinding
-    private val studyViewModel: StudyViewModel by viewModels()
-    private lateinit var learnMaterialAdapter: LearnMaterialAdapter
+    private val viewModel: StudyViewModel by viewModels()
+    private lateinit var adapter: LearnMaterialAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,15 +23,44 @@ class StudyActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        // Menginisialisasi RecyclerView
-        learnMaterialAdapter = LearnMaterialAdapter(emptyList())
-        binding.rvLearnMaterial.layoutManager = LinearLayoutManager(this)
-        binding.rvLearnMaterial.adapter = learnMaterialAdapter
+        setupRecyclerView()
+        observeViewModel()
+        viewModel.fetchChapters()
+    }
 
-        // Mengambil data dari ViewModel
-        studyViewModel.fetchChapters().observe(this) { chapters ->
-            learnMaterialAdapter = LearnMaterialAdapter(chapters)
-            binding.rvLearnMaterial.adapter = learnMaterialAdapter
+    private fun setupRecyclerView() {
+        adapter = LearnMaterialAdapter { chapter ->
+            val intent = Intent(this, MaterialListActivity::class.java)
+            intent.putExtra("CHAPTER_ID", chapter.id.toString())
+            startActivity(intent)
         }
+
+        binding.rvLearnMaterial.layoutManager = LinearLayoutManager(this)
+        binding.rvLearnMaterial.adapter = adapter
+    }
+
+    private fun observeViewModel() {
+        viewModel.chapters.observe(this, Observer { chapters ->
+            binding.progressBar.visibility = View.GONE
+            if (chapters != null && chapters.isNotEmpty()) {
+                adapter.submitList(chapters)
+            } else {
+                Toast.makeText(this, "No Materials available", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.isLoading.observe(this, Observer { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        })
+
+        viewModel.errorMessage.observe(this, Observer { message ->
+            if (!message.isNullOrEmpty()) {
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
+
+
+

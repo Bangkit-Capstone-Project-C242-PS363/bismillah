@@ -39,6 +39,12 @@ class ProfileFragment : Fragment() {
         profileViewModel.getUsername().observe(viewLifecycleOwner) { username ->
             binding.tvUsername.text = username
         }
+
+        profileViewModel.getEmail().observe(viewLifecycleOwner) { email ->
+            binding.tvEmail.text = email
+        }
+
+
         binding.tvLogout.setOnClickListener {
             showLogoutConfirmationDialog()
         }

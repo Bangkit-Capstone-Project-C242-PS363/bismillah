@@ -26,6 +26,10 @@ class ProfileViewModel(
         return repository.getUsername().asLiveData()
     }
 
+    fun getEmail(): LiveData<String> {
+        return repository.getEmail().asLiveData()
+    }
+
     fun logout() {
         viewModelScope.launch {
             try {

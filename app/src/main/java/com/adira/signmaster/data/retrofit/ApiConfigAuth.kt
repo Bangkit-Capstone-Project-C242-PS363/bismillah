@@ -23,7 +23,7 @@ object ApiConfigAuth {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://signmaster-auth-304278585381.asia-southeast2.run.app/")
+            .baseUrl("http://34.50.84.107/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

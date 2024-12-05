@@ -34,6 +34,10 @@ class RepositoryAuth private constructor(
         return pref.getUsername()
     }
 
+    fun getEmail(): Flow<String> {
+        return pref.getEmail()
+    }
+
 
     fun getToken(): Flow<String> {
         return pref.getLoginToken()

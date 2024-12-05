@@ -9,7 +9,7 @@ import com.adira.signmaster.ui.home.HomeViewModel
 import com.adira.signmaster.ui.login.LoginViewModel
 import com.adira.signmaster.ui.profile.ProfileViewModel
 import com.adira.signmaster.ui.register.RegisterViewModel
-import com.adira.signmaster.ui.study.StudyViewModel
+
 
 class ViewModelFactory(
     private val repository: RepositoryAuth

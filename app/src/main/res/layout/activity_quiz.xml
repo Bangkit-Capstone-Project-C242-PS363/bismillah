@@ -56,10 +56,8 @@
             android:text="@string/tagline_quiz"
             android:textColor="@color/dark_blue"
             android:textSize="18sp"
-            android:layout_marginEnd="8dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/baseTop"
-            app:layout_constraintEnd_toStartOf="@+id/iconTagline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

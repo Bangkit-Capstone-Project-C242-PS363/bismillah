@@ -1,4 +1,5 @@
 package com.adira.signmaster.data.response
 
-class MotionData {
-}
+data class MotionData(
+    val data: String
+)

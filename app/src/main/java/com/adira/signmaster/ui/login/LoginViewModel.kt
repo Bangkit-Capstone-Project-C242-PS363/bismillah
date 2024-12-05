@@ -52,7 +52,8 @@ class LoginViewModel(
                             UserModel(
                                 loginResponse.loginResult.name.toString(),
                                 loginResponse.loginResult.token.toString(),
-                                true
+                                true,
+                                loginResponse.loginResult.email.toString(),
                             )
                         )
                         _isSuccess.value = true
