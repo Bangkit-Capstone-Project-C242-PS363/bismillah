@@ -10,28 +10,35 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.adira.signmaster.R
 import com.adira.signmaster.data.pref.UserPreference
 import com.adira.signmaster.data.pref.dataStore
 import com.adira.signmaster.databinding.FragmentProfileBinding
+import com.adira.signmaster.ui.home.HomeViewModel
 import com.adira.signmaster.ui.login.LoginActivity
+import com.adira.signmaster.ui.viewmodelfactory.ViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var binding: FragmentProfileBinding  // Binding untuk mengakses elemen UI
+    private lateinit var binding: FragmentProfileBinding
+    private val profileViewModel: ProfileViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity().application)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        // Menangani klik pada tvLogout
+        profileViewModel.getUsername().observe(viewLifecycleOwner) { username ->
+            binding.tvUsername.text = username
+        }
         binding.tvLogout.setOnClickListener {
             showLogoutConfirmationDialog()
         }
@@ -47,31 +54,24 @@ class ProfileFragment : Fragment() {
                 dialog.dismiss()
             }
             .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                // Panggil fungsi logout dan tampilkan pesan
                 logoutUser()
             }
             .show()
     }
 
     private fun logoutUser() {
-        // Hapus session login
         lifecycleScope.launch {
             val pref = UserPreference.getInstance(requireContext().dataStore)
-            pref.logout()  // Menghapus data session
-
-            // Tampilkan Toast untuk menunjukkan logout berhasil
+            pref.logout()
             Toast.makeText(requireContext(), getString(R.string.logout_success), Toast.LENGTH_SHORT).show()
-
-            // Navigasikan pengguna ke halaman login atau activity sambutan
             navigateToLogin()
         }
     }
 
     private fun navigateToLogin() {
-        // Mengarahkan pengguna ke halaman login
         val intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)
-        requireActivity().finish()  // Menutup ProfileActivity atau MainActivity setelah logout
+        requireActivity().finish()
     }
 }
 

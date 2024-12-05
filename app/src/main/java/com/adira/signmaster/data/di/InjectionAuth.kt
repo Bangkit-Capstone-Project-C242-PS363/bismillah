@@ -14,7 +14,6 @@ object InjectionAuth {
         val user = runBlocking {
             pref.getLoginStatus().first()
         }
-
         val apiService = ApiConfigAuth.getApiServiceAuth(user.token)
         return RepositoryAuth.getInstance(apiService, pref)
     }

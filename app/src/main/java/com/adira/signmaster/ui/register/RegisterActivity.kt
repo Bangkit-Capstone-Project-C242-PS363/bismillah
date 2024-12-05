@@ -1,7 +1,6 @@
 package com.adira.signmaster.ui.register
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +9,6 @@ import com.adira.signmaster.databinding.ActivityRegisterBinding
 import com.adira.signmaster.ui.login.LoginActivity
 import android.util.Patterns
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.activity.viewModels
 import com.adira.signmaster.R
 import com.adira.signmaster.ui.viewmodelfactory.ViewModelFactory
@@ -29,26 +26,13 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Menavigasi ke halaman login
+        supportActionBar?.hide()
+
         binding.navigateToLogin.setOnClickListener {
             navigateToLogin()
         }
 
-        setupView()
         setupAction()
-    }
-
-    private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-        supportActionBar?.hide()
     }
 
     private fun setupAction() {
@@ -62,12 +46,11 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            binding.progressBar.visibility = View.VISIBLE  // Show progress bar when starting registration
+            binding.progressBar.visibility = View.VISIBLE
             registerViewModel.register(name, email, password, confirmPassword)
 
-            // Observasi hasil registrasi
             registerViewModel.registerResult.observe(this) { result ->
-                binding.progressBar.visibility = View.GONE  // Hide progress bar after receiving the result
+                binding.progressBar.visibility = View.GONE
 
                 when (result) {
                     is Result.Success -> {
@@ -76,7 +59,6 @@ class RegisterActivity : AppCompatActivity() {
                     }
 
                     is Result.Error -> {
-                        // Tangani error jika terjadi kesalahan
                         registerViewModel.isError.observe(this) { errorMessage ->
                             if (errorMessage != null) {
                                 Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()

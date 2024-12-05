@@ -53,7 +53,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null
-
         private val USERNAME = stringPreferencesKey("username")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")

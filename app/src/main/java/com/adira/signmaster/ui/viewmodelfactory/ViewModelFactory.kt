@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.adira.signmaster.data.di.InjectionAuth
 import com.adira.signmaster.data.repository.RepositoryAuth
+import com.adira.signmaster.ui.home.HomeViewModel
 import com.adira.signmaster.ui.login.LoginViewModel
+import com.adira.signmaster.ui.profile.ProfileViewModel
 import com.adira.signmaster.ui.register.RegisterViewModel
+import com.adira.signmaster.ui.study.StudyViewModel
 
 class ViewModelFactory(
     private val repository: RepositoryAuth
@@ -15,22 +18,11 @@ class ViewModelFactory(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
-            LoginViewModel::class.java -> {
-                LoginViewModel(repository) as T
-            }
-            RegisterViewModel::class.java -> {
-                RegisterViewModel(repository) as T
-            }
-            // Tambahkan ViewModel lainnya di sini jika perlu
-            // MainViewModel::class.java -> {
-            //     MainViewModel(repository) as T
-            // }
-            // DetailStoryViewModel::class.java -> {
-            //     DetailStoryViewModel(repository) as T
-            // }
-            // AddStoryViewModel::class.java -> {
-            //     AddStoryViewModel(repository) as T
-            // }
+            LoginViewModel::class.java -> LoginViewModel(repository) as T
+            RegisterViewModel::class.java -> RegisterViewModel(repository) as T
+            HomeViewModel::class.java -> HomeViewModel(repository) as T
+            ProfileViewModel::class.java -> ProfileViewModel(repository) as T
+//            StudyViewModel::class.java -> StudyViewModel(repository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
@@ -49,3 +41,4 @@ class ViewModelFactory(
         }
     }
 }
+

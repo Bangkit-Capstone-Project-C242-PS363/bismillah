@@ -10,7 +10,7 @@ import com.adira.signmaster.data.pref.UserModel
 import com.adira.signmaster.data.repository.RepositoryAuth
 import kotlinx.coroutines.launch
 
-class MainViewModel(
+class ProfileViewModel(
     private val repository: RepositoryAuth
 ) : ViewModel() {
 
@@ -22,7 +22,7 @@ class MainViewModel(
         return repository.getToken().asLiveData()
     }
 
-    private fun getUsername(): LiveData<String> {
+    fun getUsername(): LiveData<String> {
         return repository.getUsername().asLiveData()
     }
 

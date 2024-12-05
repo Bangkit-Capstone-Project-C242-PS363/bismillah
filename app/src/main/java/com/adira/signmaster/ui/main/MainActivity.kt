@@ -16,23 +16,6 @@ import com.adira.signmaster.ui.login.LoginActivity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-//class MainActivity : AppCompatActivity() {
-//
-//    private lateinit var binding: ActivityMainBinding
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//        binding = ActivityMainBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//
-//        val navView: BottomNavigationView = binding.navView
-//        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-//        navView.setupWithNavController(navController)
-//    }
-//
-//}
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -40,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
+
         pref = UserPreference.getInstance(applicationContext.dataStore)
         lifecycleScope.launch {
             val user = pref.getLoginStatus().first()
@@ -63,6 +48,6 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
-        finish()  // Tutup MainActivity agar tidak bisa kembali ke halaman utama
+        finish()
     }
 }
