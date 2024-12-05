@@ -23,7 +23,7 @@
     <string name="answer">Answer</string>
     <string name="completed">Completed</string>
     <string name="exit">Exit</string>
-    <string name="quiz_result">"Quiz Result"</string>
+    <string name="quiz_result">Correct Answers: %1$d/%2$d</string>
     <string name="email">Email@email.com</string>
     <string name="subscription">Subscription</string>
     <string name="logout">Logout</string>
@@ -41,7 +41,7 @@
 
     <string name="signup_success">Anda Berhasil Membuat Akun</string>
     <string name="signup_failed">Gagal Membuat Akun. Silahkan coba lagi</string>
-
+    <string name="question_progress">Question %1$d of %2$d</string>
     <string name="logout_verification">Apa anda yakin untuk keluar?</string>
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>

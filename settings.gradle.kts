@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Sign Master"
 include(":app")
- 

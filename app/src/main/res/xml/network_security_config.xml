@@ -1,5 +1,13 @@
+<<<<<<< HEAD
+=======
+<?xml version="1.0" encoding="utf-8"?>
+>>>>>>> 72aaff8 (Quiz)
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">34.50.84.107</domain>
     </domain-config>
+<<<<<<< HEAD
 </network-security-config>
+=======
+</network-security-config>
+>>>>>>> 72aaff8 (Quiz)
