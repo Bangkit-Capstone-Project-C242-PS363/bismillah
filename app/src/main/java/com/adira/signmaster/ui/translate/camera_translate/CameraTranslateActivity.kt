@@ -86,7 +86,7 @@ class CameraTranslateActivity : AppCompatActivity() {
             override fun onOpen(handshake: ServerHandshake?) {
                 Log.d(TAG, "WebSocket connection established")
                 runOnUiThread {
-                    binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(applicationContext, "Server Connected", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -98,7 +98,7 @@ class CameraTranslateActivity : AppCompatActivity() {
             override fun onClose(code: Int, reason: String?, remote: Boolean) {
                 Log.d(TAG, "WebSocket connection closed: $reason")
                 runOnUiThread {
-                    binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(applicationContext, "Server Disconnected", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -106,7 +106,7 @@ class CameraTranslateActivity : AppCompatActivity() {
             override fun onError(ex: Exception?) {
                 Log.e(TAG, "WebSocket error occurred: ${ex?.message}")
                 runOnUiThread {
-                    binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(applicationContext, "Connection Error", Toast.LENGTH_SHORT).show()
                 }
             }

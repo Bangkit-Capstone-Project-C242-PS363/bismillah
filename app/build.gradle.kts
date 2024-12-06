@@ -54,7 +54,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.datastore.preferences)
-    implementation(files("C:/Users/USER/Downloads/LeonidsLib-1.3.2.jar"))
+    implementation (files("libs/LeonidsLib-1.3.2.jar"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
