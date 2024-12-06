@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
+import com.adira.signmaster.R
 import com.adira.signmaster.databinding.ActivityStudyBinding
 import com.adira.signmaster.ui.study.material_list.MaterialListActivity
 
@@ -33,6 +34,7 @@ class StudyActivity : AppCompatActivity() {
             val intent = Intent(this, MaterialListActivity::class.java)
             intent.putExtra("CHAPTER_ID", chapter.id.toString())
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Tambahkan animasi
         }
 
         binding.rvLearnMaterial.layoutManager = LinearLayoutManager(this)
@@ -60,6 +62,11 @@ class StudyActivity : AppCompatActivity() {
             }
         })
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // Animasi balik
+    }
+
 }
 
 

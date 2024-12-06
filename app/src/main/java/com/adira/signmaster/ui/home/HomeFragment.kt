@@ -47,16 +47,22 @@ class HomeFragment : Fragment() {
         binding.cardStudy.setOnClickListener {
             val intent = Intent(requireContext(), StudyActivity::class.java)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
+
         }
 
         binding.cardQuiz.setOnClickListener {
             val intent = Intent(requireContext(), QuizActivity::class.java)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
         }
+
 
         binding.cardTranslate.setOnClickListener {
             val intent = Intent(requireContext(), TranslateActivity::class.java)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
+
         }
 
 

@@ -3,6 +3,7 @@ package com.adira.signmaster.ui.quiz.quiz_material
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,8 @@ import com.adira.signmaster.databinding.ActivityQuizMaterialBinding
 import com.adira.signmaster.ui.quiz.QuizViewModel
 import com.adira.signmaster.ui.quiz.quiz_result.QuizResultFragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.plattysoft.leonids.ParticleSystem
 
 class QuizMaterialActivity : AppCompatActivity() {
 
@@ -25,6 +28,11 @@ class QuizMaterialActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQuizMaterialBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Set toolbar navigation icon listener
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed() // Navigasi ke fragment sebelumnya
+        }
 
         // Ambil chapterId dan chapterTitle dari Intent
         val chapterId = intent.getIntExtra(EXTRA_CHAPTER_ID, -1)
@@ -88,36 +96,56 @@ class QuizMaterialActivity : AppCompatActivity() {
 
         val question = quizList[index]
 
-        // Tampilkan progress kuis
+        // Update progress
         val progress = ((index + 1) * 100) / quizList.size
         binding.progressBar.progress = progress
 
-        // Set toolbar title
-        binding.toolbarTitle.text = getString(R.string.question_progress, index + 1, quizList.size)
+        // Preload next question image
+        preloadNextQuestionImage(index)
 
-        // Tampilkan gambar pertanyaan
+        // Load image with animation
+        val imageAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        binding.ivQuiz.startAnimation(imageAnimation)
         Glide.with(this)
             .load(question.question)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(R.drawable.placeholder_image)
             .error(R.drawable.error_icon)
             .into(binding.ivQuiz)
 
-        // Atur tombol jawaban
         setupAnswerButtons(question)
     }
 
+    private fun preloadNextQuestionImage(index: Int) {
+        if (index + 1 < quizList.size) {
+            Glide.with(this)
+                .load(quizList[index + 1].question)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .preload()
+        }
+    }
 
 
     private fun setupAnswerButtons(question: Quiz) {
         val buttons = listOf(binding.btn1, binding.btn2, binding.btn3, binding.btn4)
 
-        buttons.forEach { it.visibility = View.GONE } // Reset semua tombol
+        // Reset semua tombol
+        buttons.forEach {
+            it.visibility = View.GONE
+            it.text = "" // Hapus teks untuk tombol
+        }
 
+        // Tampilkan tombol dengan animasi fade-in atau slide-up
         question.answers.forEachIndexed { index, answer ->
             if (index < buttons.size) {
                 buttons[index].apply {
                     text = answer.answer
                     visibility = View.VISIBLE
+
+                    // Terapkan animasi slide-up pada tombol
+                    val animation = android.view.animation.AnimationUtils.loadAnimation(this@QuizMaterialActivity, R.anim.slide_up)
+                    this.startAnimation(animation)
+
                     setOnClickListener {
                         validateAnswer(index, question.correctAnswerIndex)
                     }
@@ -132,11 +160,8 @@ class QuizMaterialActivity : AppCompatActivity() {
             correctAnswersCount++
         }
 
-        // Delay sebelum menampilkan pertanyaan berikutnya
-        binding.root.postDelayed({
-            currentQuestionIndex++
-            displayQuiz(currentQuestionIndex)
-        }, 1000)
+        currentQuestionIndex++
+        displayQuiz(currentQuestionIndex)
     }
 
 
@@ -153,9 +178,14 @@ class QuizMaterialActivity : AppCompatActivity() {
         binding.btn3.visibility = View.VISIBLE
         binding.btn4.visibility = View.VISIBLE
         binding.fabRepeatQuiz.visibility = View.VISIBLE
+        buttons().forEach { button ->
+            button.setBackgroundColor(getColor(R.color.white))
+        }
 
         displayQuiz(currentQuestionIndex)
     }
+    private fun buttons() = listOf(binding.btn1, binding.btn2, binding.btn3, binding.btn4)
+
 
 
 
@@ -188,5 +218,11 @@ class QuizMaterialActivity : AppCompatActivity() {
         const val EXTRA_CHAPTER_ID = "extra_chapter_id"
         const val EXTRA_CHAPTER_TITLE = "extra_chapter_title"
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // Transisi balik
+    }
+
 
 }

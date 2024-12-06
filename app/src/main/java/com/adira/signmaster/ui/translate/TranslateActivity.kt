@@ -71,7 +71,13 @@ class TranslateActivity : AppCompatActivity() {
             Toast.makeText(this@TranslateActivity, "Error loading video", Toast.LENGTH_SHORT).show()
             true
         }
+
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // Animasi balik
+    }
+
 }
 
 

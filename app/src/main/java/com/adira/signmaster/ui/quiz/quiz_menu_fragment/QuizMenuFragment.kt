@@ -12,10 +12,13 @@ import androidx.fragment.app.viewModels
 import com.adira.signmaster.R
 import com.adira.signmaster.ui.quiz.QuizViewModel
 import com.adira.signmaster.ui.quiz.quiz_material.QuizMaterialActivity
+import com.adira.signmaster.ui.study.StudyActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class QuizMenuFragment : Fragment() {
     private var chapterId: Int? = null
     private var chapterTitle: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         chapterId = arguments?.getInt(ARG_CHAPTER_ID)
@@ -34,8 +37,17 @@ class QuizMenuFragment : Fragment() {
                 showError("Chapter data is null")
             }
         }
+        view.findViewById<Button>(R.id.btnLearn).setOnClickListener {
+            startStudyActivity()
+        }
+
+        // Tombol "Back"
+        view.findViewById<FloatingActionButton>(R.id.fabMenu).setOnClickListener {
+            activity?.onBackPressed() // Navigasi ke halaman sebelumnya
+        }
         return view
     }
+
 
 
     private fun startQuizActivity(chapterId: Int, chapterTitle: String) {
@@ -44,6 +56,13 @@ class QuizMenuFragment : Fragment() {
             putExtra(QuizMaterialActivity.EXTRA_CHAPTER_TITLE, chapterTitle) // Kirim judul chapter
         }
         startActivity(intent)
+        activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Tambahkan transisi
+    }
+
+    private fun startStudyActivity() {
+        val intent = Intent(requireContext(), StudyActivity::class.java)
+        startActivity(intent)
+        activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
 

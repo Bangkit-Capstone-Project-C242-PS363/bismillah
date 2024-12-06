@@ -29,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.navigateToRegister.setOnClickListener {
             navigateToRegister()
+
         }
 
         setupAction()
@@ -105,6 +106,12 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToRegister() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Tambahkan animasi
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // Animasi balik
+    }
+
 }
 
