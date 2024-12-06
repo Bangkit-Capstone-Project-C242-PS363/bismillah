@@ -46,6 +46,8 @@
     <string name="logout_verification">Apa anda yakin untuk keluar?</string>
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
-    <string name="logout_success">Anda berhasil keluar</string>s
+    <string name="logout_success">Anda berhasil keluar</string>
+    <string name="prediction_placeholder">Prediction</string>
+    <string name="fps_placeholder">Fps</string>s
 
 </resources>

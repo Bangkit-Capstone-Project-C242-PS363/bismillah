@@ -69,13 +69,16 @@ class HomeFragment : Fragment() {
         val cardItems = listOf(
             CardItem("Card 1", R.drawable.placeholder_image),
             CardItem("Card 2", R.drawable.placeholder_image),
+            CardItem("Card 3", R.drawable.placeholder_image),
         )
 
         val cardAdapter = CardAdapter(cardItems)
         binding.rvNews.apply {
+            setHasFixedSize(true)
             adapter = cardAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext())
         }
+
     }
 
     override fun onDestroyView() {

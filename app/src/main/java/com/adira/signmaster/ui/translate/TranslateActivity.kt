@@ -1,5 +1,6 @@
 package com.adira.signmaster.ui.translate
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import com.adira.signmaster.R
 import com.adira.signmaster.databinding.ActivityTranslateBinding
+import com.adira.signmaster.ui.translate.camera_translate.CameraTranslateActivity
 
 class TranslateActivity : AppCompatActivity() {
 
@@ -55,7 +57,8 @@ class TranslateActivity : AppCompatActivity() {
         }
 
         binding.fabCamera.setOnClickListener {
-            // Implementasi untuk kamera
+            val intent = Intent(this, CameraTranslateActivity::class.java)
+            startActivity(intent)
         }
     }
 

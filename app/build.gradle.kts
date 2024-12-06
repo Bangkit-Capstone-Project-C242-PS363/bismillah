@@ -75,4 +75,13 @@ dependencies {
     annotationProcessor(libs.glide.compiler)
     implementation (libs.core)
 
+    implementation("org.java-websocket:Java-WebSocket:1.5.3")
+
+    // Camera dependencies
+    implementation("androidx.camera:camera-core:1.2.2")
+    implementation("androidx.camera:camera-camera2:1.2.2")
+    implementation("androidx.camera:camera-lifecycle:1.2.2")
+    implementation("androidx.camera:camera-view:1.2.2")
+
+
 }
