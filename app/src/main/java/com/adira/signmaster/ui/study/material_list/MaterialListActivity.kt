@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adira.signmaster.R
 import com.adira.signmaster.databinding.ActivityMaterialListBinding
+import com.adira.signmaster.ui.quiz.quiz_material.QuizMaterialActivity.Companion.EXTRA_CHAPTER_TITLE
 import com.adira.signmaster.ui.study.material_list.detail_material.DetailMaterialActivity
 import com.bumptech.glide.Glide
 
@@ -26,6 +27,15 @@ class MaterialListActivity : AppCompatActivity() {
         binding = ActivityMaterialListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+
+
+        binding.toolbarMaterial.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
+        val chapterTitle = intent.getStringExtra("CHAPTER_TITLE")
+        binding.materialTitle.text = chapterTitle ?: "Unknown Chapter"
 
         adapter = MaterialListAdapter { material ->
             val position = adapter.currentList.indexOf(material)
@@ -66,6 +76,7 @@ class MaterialListActivity : AppCompatActivity() {
             }
         })
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // Animasi balik

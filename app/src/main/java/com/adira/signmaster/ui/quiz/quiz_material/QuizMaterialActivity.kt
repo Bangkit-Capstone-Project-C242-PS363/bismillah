@@ -33,7 +33,7 @@ class QuizMaterialActivity : AppCompatActivity() {
 
         // Set toolbar navigation icon listener
         binding.toolbar.setNavigationOnClickListener {
-            onBackPressed() // Navigasi ke fragment sebelumnya
+            onBackPressed()
         }
 
         // Ambil chapterId dan chapterTitle dari Intent

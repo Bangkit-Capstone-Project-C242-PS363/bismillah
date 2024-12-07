@@ -1,7 +1,5 @@
 package com.adira.signmaster.ui.translate
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.adira.signmaster.data.response.MotionData

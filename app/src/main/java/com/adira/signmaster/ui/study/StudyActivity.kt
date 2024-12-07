@@ -27,14 +27,19 @@ class StudyActivity : AppCompatActivity() {
         setupRecyclerView()
         observeViewModel()
         viewModel.fetchChapters()
+
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setupRecyclerView() {
         adapter = LearnMaterialAdapter { chapter ->
             val intent = Intent(this, MaterialListActivity::class.java)
             intent.putExtra("CHAPTER_ID", chapter.id.toString())
+            intent.putExtra("CHAPTER_TITLE", chapter.title)
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Tambahkan animasi
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.rvLearnMaterial.layoutManager = LinearLayoutManager(this)

@@ -21,7 +21,10 @@ class QuizActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        // Setup RecyclerView and fetch chapters
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+
         setupRecyclerView()
         fetchChapters()
     }
