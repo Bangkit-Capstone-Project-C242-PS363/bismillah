@@ -75,7 +75,6 @@ class DetailMaterialActivity : AppCompatActivity() {
 
         if (visualContentUrl.isNotEmpty()) {
             if (visualContentUrl.endsWith(".mp4")) {
-                // Display video
                 binding.vvMaterial.visibility = View.VISIBLE
                 binding.ivMaterial.visibility = View.GONE
 
@@ -84,7 +83,6 @@ class DetailMaterialActivity : AppCompatActivity() {
                 binding.vvMaterial.setOnPreparedListener { it.isLooping = true }
                 binding.vvMaterial.start()
             } else {
-                // Display image
                 binding.vvMaterial.visibility = View.GONE
                 binding.ivMaterial.visibility = View.VISIBLE
 

@@ -4,7 +4,7 @@
     <string name="title_profile">Profile</string>
 
     <string name="welcome">Welcome!</string>
-    <string name="username">UserName</string>
+    <string name="username">Username</string>
     <string name="translate">Translate</string>
     <string name="quiz">Quiz</string>
     <string name="study">Study</string>
@@ -37,16 +37,16 @@
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
 
-    <string name="login_success">Anda Berhasil Masuk</string>
-    <string name="login_failed">Gagal untuk masuk. Silahkan cek email dan password kembali</string>
+    <string name="login_success">You\'ve successfully logged in</string>
+    <string name="login_failed">Failed to log in. Please check your email and password again</string>
 
-    <string name="signup_success">Anda Berhasil Membuat Akun</string>
-    <string name="signup_failed">Gagal Membuat Akun. Silahkan coba lagi</string>
+    <string name="signup_success">You Have Successfully Created an Account</string>
+    <string name="signup_failed">Failed to create an account. Please try again</string>
     <string name="question_progress">Question %1$d of %2$d</string>
-    <string name="logout_verification">Apa anda yakin untuk keluar?</string>
-    <string name="yes">Ya</string>
-    <string name="no">Tidak</string>
-    <string name="logout_success">Anda berhasil keluar</string>
+    <string name="logout_verification">Are you sure you want to come out?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="logout_success">You\'ve successfully logged out</string>
     <string name="prediction_placeholder">Prediction</string>
     <string name="fps_placeholder">Fps</string>
     <string name="title_scan">Scan</string>s

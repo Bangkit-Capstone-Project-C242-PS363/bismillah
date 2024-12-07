@@ -50,10 +50,10 @@ class LoginViewModel(
                     loginResponse.loginResult != null -> {
                         saveSession(
                             UserModel(
-                                loginResponse.loginResult.name.toString(),
-                                loginResponse.loginResult.token.toString(),
+                                loginResponse.loginResult.name,
+                                loginResponse.loginResult.token,
                                 true,
-                                loginResponse.loginResult.email.toString(),
+                                loginResponse.loginResult.email,
                             )
                         )
                         _isSuccess.value = true

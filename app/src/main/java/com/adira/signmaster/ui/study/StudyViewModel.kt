@@ -39,7 +39,6 @@ class StudyViewModel : ViewModel() {
                     _errorMessage.postValue("Error: ${response.message()}")
                 }
             }
-
             override fun onFailure(call: Call<ChapterListResponse>, t: Throwable) {
                 _isLoading.value = false
                 _errorMessage.postValue("Network Error: ${t.message}")

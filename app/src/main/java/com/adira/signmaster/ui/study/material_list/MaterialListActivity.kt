@@ -28,8 +28,6 @@ class MaterialListActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-
-
         binding.toolbarMaterial.setNavigationOnClickListener {
             onBackPressed()
         }
@@ -79,7 +77,7 @@ class MaterialListActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // Animasi balik
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
 }

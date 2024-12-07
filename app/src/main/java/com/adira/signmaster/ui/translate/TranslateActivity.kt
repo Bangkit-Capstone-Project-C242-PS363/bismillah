@@ -29,6 +29,10 @@ class TranslateActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+
         translateViewModel.videoUrl.observe(this, Observer { url ->
             displayVideo(url)
         })

@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.translate.TranslateActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/yellow"
+        app:backgroundTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_arrow_back_24"
+        app:tint="@color/white"
+        tools:ignore="ContentDescription" />
+
 
     <VideoView
         android:id="@+id/vvSignLanguage"
