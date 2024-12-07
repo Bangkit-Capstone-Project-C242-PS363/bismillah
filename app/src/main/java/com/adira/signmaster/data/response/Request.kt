@@ -11,3 +11,7 @@ data class RegisterRequest(
     val password: String,
     val confirmPassword: String
 )
+data class BaseResponse(
+    val error: Boolean,
+    val message: String
+)

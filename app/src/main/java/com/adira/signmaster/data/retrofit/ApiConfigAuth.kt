@@ -8,7 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiConfigAuth {
 
     fun getApiServiceAuth(token: String): ApiServiceAuth {
-
         val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         val authInterceptor = Interceptor { chain ->
             val req = chain.request()
