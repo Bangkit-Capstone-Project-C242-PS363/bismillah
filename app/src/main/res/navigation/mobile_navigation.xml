@@ -11,16 +11,16 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
-    <activity
-        android:id="@+id/navigation_study"
-        android:name="com.adira.signmaster.ui.study.StudyActivity"
-        android:label="@string/title_home"
-        tools:layout="@layout/activity_study" />
-
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.adira.signmaster.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <activity
+        android:id="@+id/navigation_camera"
+        android:name="com.adira.signmaster.ui.translate.camera_translate.CameraTranslateActivity"
+        android:label="@string/title_profile"
+        tools:layout="@layout/activity_camera_translate" />
 
 </navigation>

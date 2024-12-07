@@ -24,7 +24,6 @@ class TranslateViewModel : ViewModel() {
         apiService.sendMotionData(MotionData(data = text)).enqueue(object : Callback<ToMotionResponse> {
             override fun onResponse(call: Call<ToMotionResponse>, response: Response<ToMotionResponse>) {
                 isLoading.value = false
-
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result != null && !result.error) {

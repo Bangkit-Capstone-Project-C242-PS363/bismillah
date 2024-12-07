@@ -7,21 +7,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.study.material_list.detail_material.DetailMaterialActivity">
 
-    <ImageView
-        android:id="@+id/ivMaterial"
+    <FrameLayout
+        android:id="@+id/flMediaContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvMaterialTitle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fabMenu" />
+        app:layout_constraintTop_toBottomOf="@id/fabMenu">
+
+        <com.adira.signmaster.ui.custom_view.CustomVideoView
+            android:id="@+id/vvMaterial"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/ivMaterial"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/yellow"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="@color/yellow"
         android:src="@drawable/baseline_menu_24"
         app:tint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,14 +48,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/yellow"
+        app:backgroundTint="@color/yellow"
         android:src="@drawable/baseline_arrow_back_24"
-        app:backgroundTint="@color/white"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/white"
         tools:ignore="ContentDescription" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -48,26 +60,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/yellow"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="@color/yellow"
         android:src="@drawable/baseline_arrow_forward_24"
         app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription" />
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/fabRepeat"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="16dp"-->
-<!--        app:backgroundTint="@color/white"-->
-<!--        android:backgroundTint="@color/yellow"-->
-<!--        android:src="@drawable/baseline_repeat_24"-->
-<!--        app:tint="@color/white"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/fabNext"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        tools:ignore="ContentDescription" />-->
 
     <TextView
         android:id="@+id/tvMaterialTitle"
@@ -83,6 +81,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.908" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

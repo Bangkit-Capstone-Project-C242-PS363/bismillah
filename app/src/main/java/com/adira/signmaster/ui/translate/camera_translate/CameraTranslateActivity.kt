@@ -58,6 +58,7 @@ class CameraTranslateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraTranslateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         // Initialize critical components
         setupWebSocket()

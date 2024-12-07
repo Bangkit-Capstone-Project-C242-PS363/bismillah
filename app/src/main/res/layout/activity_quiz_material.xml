@@ -40,27 +40,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-
-    <ImageView
-        android:id="@+id/ivQuiz"
+    <FrameLayout
+        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
         android:layout_height="360dp"
-        android:scaleType="centerCrop"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/placeholder_image" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/ivQuiz"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            app:srcCompat="@drawable/placeholder_image" />
+
+        <com.adira.signmaster.ui.custom_view.CustomVideoView
+            android:id="@+id/vvQuiz"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabRepeatQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/yellow"
+        app:backgroundTint="@color/yellow"
         android:src="@drawable/baseline_repeat_24"
-        app:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/ivQuiz"
-        app:layout_constraintEnd_toEndOf="@+id/ivQuiz"
+        app:layout_constraintBottom_toBottomOf="@id/contentFrame"
+        app:layout_constraintEnd_toEndOf="@id/contentFrame"
         app:tint="@color/white"
         tools:ignore="ContentDescription" />
 
@@ -78,7 +89,7 @@
         android:textColor="@color/dark_blue"
         app:layout_constraintEnd_toStartOf="@+id/btn2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivQuiz" />
+        app:layout_constraintTop_toBottomOf="@id/contentFrame" />
 
     <Button
         android:id="@+id/btn2"
@@ -94,7 +105,7 @@
         android:background="@drawable/quiz_button_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn1"
-        app:layout_constraintTop_toBottomOf="@+id/ivQuiz" />
+        app:layout_constraintTop_toBottomOf="@id/contentFrame" />
 
     <Button
         android:id="@+id/btn3"
@@ -127,6 +138,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn2"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,13 @@
 package com.adira.signmaster.ui.quiz.quiz_material
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.adira.signmaster.R
@@ -14,7 +17,6 @@ import com.adira.signmaster.ui.quiz.QuizViewModel
 import com.adira.signmaster.ui.quiz.quiz_result.QuizResultFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.plattysoft.leonids.ParticleSystem
 
 class QuizMaterialActivity : AppCompatActivity() {
 
@@ -55,15 +57,12 @@ class QuizMaterialActivity : AppCompatActivity() {
         fetchQuizzes(chapterId)
     }
 
-
-
     private fun setupUI() {
         binding.progressBar.progress = 0
         binding.fabRepeatQuiz.setOnClickListener {
             restartQuiz()
         }
     }
-
 
     private fun fetchQuizzes(chapterId: Int) {
         viewModel.fetchQuiz(chapterId)
@@ -87,7 +86,6 @@ class QuizMaterialActivity : AppCompatActivity() {
         }
     }
 
-
     private fun displayQuiz(index: Int) {
         if (index >= quizList.size) {
             showQuizResult()
@@ -96,22 +94,12 @@ class QuizMaterialActivity : AppCompatActivity() {
 
         val question = quizList[index]
 
-        // Update progress
         val progress = ((index + 1) * 100) / quizList.size
         binding.progressBar.progress = progress
 
-        // Preload next question image
         preloadNextQuestionImage(index)
 
-        // Load image with animation
-        val imageAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        binding.ivQuiz.startAnimation(imageAnimation)
-        Glide.with(this)
-            .load(question.question)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(R.drawable.placeholder_image)
-            .error(R.drawable.error_icon)
-            .into(binding.ivQuiz)
+        updateVisualContent(question.question, binding.ivQuiz, binding.vvQuiz)
 
         setupAnswerButtons(question)
     }
@@ -125,24 +113,47 @@ class QuizMaterialActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateVisualContent(contentUrl: String?, imageView: ImageView, videoView: VideoView) {
+        if (!contentUrl.isNullOrEmpty()) {
+            if (contentUrl.endsWith(".mp4")) {
+                videoView.visibility = View.VISIBLE
+                imageView.visibility = View.GONE
+
+                val videoUri = Uri.parse(contentUrl)
+                videoView.setVideoURI(videoUri)
+                videoView.setOnPreparedListener { it.isLooping = true }
+                videoView.start()
+            } else {
+                videoView.visibility = View.GONE
+                imageView.visibility = View.VISIBLE
+
+                Glide.with(imageView.context)
+                    .load(contentUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_icon)
+                    .into(imageView)
+            }
+        } else {
+            // Jika URL tidak tersedia
+            Toast.makeText(imageView.context, "Konten tidak tersedia", Toast.LENGTH_SHORT).show()
+            videoView.visibility = View.GONE
+            imageView.visibility = View.GONE
+        }
+    }
 
     private fun setupAnswerButtons(question: Quiz) {
         val buttons = listOf(binding.btn1, binding.btn2, binding.btn3, binding.btn4)
 
-        // Reset semua tombol
         buttons.forEach {
             it.visibility = View.GONE
             it.text = "" // Hapus teks untuk tombol
         }
-
-        // Tampilkan tombol dengan animasi fade-in atau slide-up
         question.answers.forEachIndexed { index, answer ->
             if (index < buttons.size) {
                 buttons[index].apply {
                     text = answer.answer
                     visibility = View.VISIBLE
-
-                    // Terapkan animasi slide-up pada tombol
                     val animation = android.view.animation.AnimationUtils.loadAnimation(this@QuizMaterialActivity, R.anim.slide_up)
                     this.startAnimation(animation)
 
@@ -154,7 +165,6 @@ class QuizMaterialActivity : AppCompatActivity() {
         }
     }
 
-
     private fun validateAnswer(selectedIndex: Int, correctIndex: Int) {
         if (selectedIndex == correctIndex) {
             correctAnswersCount++
@@ -164,13 +174,10 @@ class QuizMaterialActivity : AppCompatActivity() {
         displayQuiz(currentQuestionIndex)
     }
 
-
-
     private fun restartQuiz() {
         currentQuestionIndex = 0
         correctAnswersCount = 0
 
-        // Tampilkan kembali elemen yang relevan
         binding.ivQuiz.visibility = View.VISIBLE
         binding.progressBar.visibility = View.VISIBLE
         binding.btn1.visibility = View.VISIBLE
@@ -184,13 +191,10 @@ class QuizMaterialActivity : AppCompatActivity() {
 
         displayQuiz(currentQuestionIndex)
     }
+
     private fun buttons() = listOf(binding.btn1, binding.btn2, binding.btn3, binding.btn4)
 
-
-
-
     private fun showQuizResult() {
-        // Sembunyikan elemen yang tidak relevan
         binding.ivQuiz.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
         binding.btn1.visibility = View.GONE
@@ -199,14 +203,12 @@ class QuizMaterialActivity : AppCompatActivity() {
         binding.btn4.visibility = View.GONE
         binding.fabRepeatQuiz.visibility = View.GONE
 
-        // Navigasi ke fragment hasil kuis
         val fragment = QuizResultFragment.newInstance(quizList, correctAnswersCount)
         supportFragmentManager.beginTransaction()
             .replace(R.id.main, fragment)
             .addToBackStack(null)
             .commit()
     }
-
 
     private fun showErrorAndExit(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -221,8 +223,6 @@ class QuizMaterialActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // Transisi balik
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
-
-
 }

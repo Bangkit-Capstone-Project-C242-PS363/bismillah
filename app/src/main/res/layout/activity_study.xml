@@ -33,12 +33,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLearnMaterial"
-        android:layout_marginTop="16dp"
+        android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/card_learn_material"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="16dp" />
+        android:clipToPadding="false"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

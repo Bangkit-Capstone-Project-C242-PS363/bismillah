@@ -1,7 +1,9 @@
 package com.adira.signmaster.ui.study.material_list.detail_material
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.adira.signmaster.R
@@ -23,19 +25,11 @@ class DetailMaterialActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         val materialTitle = intent.getStringExtra("MATERIAL_TITLE")
-        val visualContentUrl = intent.getStringExtra("VISUAL_CONTENT_URL")
         materials = intent.getParcelableArrayListExtra("MATERIALS_LIST") ?: emptyList()
         currentMaterialIndex = intent.getIntExtra("MATERIAL_INDEX", 0)
 
         binding.tvMaterialTitle.text = materialTitle
-
-        if (!visualContentUrl.isNullOrEmpty()) {
-            Glide.with(this)
-                .load(visualContentUrl)
-                .into(binding.ivMaterial)
-        } else {
-            Toast.makeText(this, "Visual content not available", Toast.LENGTH_SHORT).show()
-        }
+        updateVisualContent(materials[currentMaterialIndex])
 
         binding.fabMenu.setOnClickListener {
             val intent = Intent(this, MaterialListActivity::class.java)
@@ -57,9 +51,7 @@ class DetailMaterialActivity : AppCompatActivity() {
                 currentMaterialIndex++
                 val nextMaterial = materials[currentMaterialIndex]
                 binding.tvMaterialTitle.text = nextMaterial.title
-                Glide.with(this)
-                    .load(nextMaterial.visual_content_url)
-                    .into(binding.ivMaterial)
+                updateVisualContent(nextMaterial)
             } else {
                 Toast.makeText(this, "No more materials", Toast.LENGTH_SHORT).show()
             }
@@ -70,20 +62,51 @@ class DetailMaterialActivity : AppCompatActivity() {
                 currentMaterialIndex--
                 val previousMaterial = materials[currentMaterialIndex]
                 binding.tvMaterialTitle.text = previousMaterial.title
-                Glide.with(this)
-                    .load(previousMaterial.visual_content_url)
-                    .into(binding.ivMaterial)
+                updateVisualContent(previousMaterial)
             } else {
                 Toast.makeText(this, "No more previous materials", Toast.LENGTH_SHORT).show()
             }
         }
     }
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // Animasi balik
+
+
+    private fun updateVisualContent(material: MaterialDetail) {
+        val visualContentUrl = material.visual_content_url
+
+        if (visualContentUrl.isNotEmpty()) {
+            if (visualContentUrl.endsWith(".mp4")) {
+                // Display video
+                binding.vvMaterial.visibility = View.VISIBLE
+                binding.ivMaterial.visibility = View.GONE
+
+                val videoUri = Uri.parse(visualContentUrl)
+                binding.vvMaterial.setVideoURI(videoUri)
+                binding.vvMaterial.setOnPreparedListener { it.isLooping = true }
+                binding.vvMaterial.start()
+            } else {
+                // Display image
+                binding.vvMaterial.visibility = View.GONE
+                binding.ivMaterial.visibility = View.VISIBLE
+
+                Glide.with(this)
+                    .load(visualContentUrl)
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_icon)
+                    .into(binding.ivMaterial)
+            }
+        } else {
+            Toast.makeText(this, "Visual content not available", Toast.LENGTH_SHORT).show()
+            binding.vvMaterial.visibility = View.GONE
+            binding.ivMaterial.visibility = View.GONE
+        }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
 }
+
 
 
 
