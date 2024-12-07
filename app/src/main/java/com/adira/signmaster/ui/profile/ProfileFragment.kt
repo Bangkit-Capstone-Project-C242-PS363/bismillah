@@ -20,6 +20,7 @@ import com.adira.signmaster.ui.home.HomeViewModel
 import com.adira.signmaster.ui.login.LoginActivity
 import com.adira.signmaster.ui.viewmodelfactory.ViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
@@ -44,6 +45,18 @@ class ProfileFragment : Fragment() {
             binding.tvEmail.text = email
         }
 
+        // Observe and set the subscription status
+        lifecycleScope.launch {
+            val pref = UserPreference.getInstance(requireContext().dataStore)
+            pref.getSubscriptionStatus().collect { isSubscribed ->
+                binding.switchSubscription.isChecked = isSubscribed
+            }
+        }
+
+        // Handle toggle change for the subscription switch
+        binding.switchSubscription.setOnCheckedChangeListener { _, isChecked ->
+            updateSubscriptionStatus(isChecked)
+        }
 
         binding.tvLogout.setOnClickListener {
             showLogoutConfirmationDialog()
@@ -51,6 +64,14 @@ class ProfileFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun updateSubscriptionStatus(isSubscribed: Boolean) {
+        lifecycleScope.launch {
+            val pref = UserPreference.getInstance(requireContext().dataStore)
+            pref.updateSubscriptionStatus(isSubscribed)
+        }
+    }
+
 
     private fun showLogoutConfirmationDialog() {
         MaterialAlertDialogBuilder(requireContext())
@@ -79,5 +100,6 @@ class ProfileFragment : Fragment() {
         startActivity(intent)
         requireActivity().finish()
     }
+
 }
 

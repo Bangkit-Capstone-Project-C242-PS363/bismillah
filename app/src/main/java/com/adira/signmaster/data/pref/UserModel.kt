@@ -5,4 +5,5 @@ data class UserModel(
     val token: String,
     val isLogin: Boolean = false,
     val email: String,
+    val isSubscribed: Boolean = false // New field for subscription status
 )

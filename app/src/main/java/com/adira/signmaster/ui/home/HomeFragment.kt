@@ -8,13 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adira.signmaster.R
+import com.adira.signmaster.data.pref.UserPreference
+import com.adira.signmaster.data.pref.dataStore
 import com.adira.signmaster.databinding.FragmentHomeBinding
+import com.adira.signmaster.ui.home.subscription.SubscriptionRequiredFragment
 import com.adira.signmaster.ui.quiz.QuizActivity
 import com.adira.signmaster.ui.study.StudyActivity
 import com.adira.signmaster.ui.translate.TranslateActivity
 import com.adira.signmaster.ui.viewmodelfactory.ViewModelFactory
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -52,9 +59,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.cardQuiz.setOnClickListener {
-            val intent = Intent(requireContext(), QuizActivity::class.java)
-            startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
+            checkSubscriptionStatusAndNavigate()
         }
 
 
@@ -79,6 +84,26 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
+    }
+
+    private fun checkSubscriptionStatusAndNavigate() {
+        lifecycleScope.launch {
+            val pref = UserPreference.getInstance(requireContext().dataStore)
+            val isSubscribed = pref.getSubscriptionStatus().first()
+
+            if (isSubscribed) {
+                // User is subscribed, navigate to QuizActivity
+                val intent = Intent(requireContext(), QuizActivity::class.java)
+                startActivity(intent)
+            } else {
+                // User is not subscribed, show the SubscriptionRequiredFragment
+                showSubscriptionRequiredFragment()
+            }
+        }
+    }
+    private fun showSubscriptionRequiredFragment() {
+        val subscriptionFragment = SubscriptionRequiredFragment()
+        subscriptionFragment.show(parentFragmentManager, "SubscriptionRequiredFragment")
     }
 
     override fun onDestroyView() {
