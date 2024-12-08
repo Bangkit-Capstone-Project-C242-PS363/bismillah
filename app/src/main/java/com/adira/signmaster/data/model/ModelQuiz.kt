@@ -6,7 +6,8 @@ import kotlinx.parcelize.Parcelize
 data class Chapter(
     val id: Int,
     val title: String,
-    val icon_url: String
+    val icon_url: String,
+    val locked: Boolean
 )
 
 data class ChapterResponse(

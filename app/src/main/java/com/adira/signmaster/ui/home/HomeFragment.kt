@@ -59,7 +59,9 @@ class HomeFragment : Fragment() {
         }
 
         binding.cardQuiz.setOnClickListener {
-            checkSubscriptionStatusAndNavigate()
+            val intent = Intent(requireContext(), QuizActivity::class.java)
+            startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
         }
 
 

@@ -68,18 +68,23 @@ class TranslateActivity : AppCompatActivity() {
 
     private fun displayVideo(url: String) {
         val videoUri = Uri.parse(url)
+
+        // Konfigurasi video view untuk streaming progresif
         binding.vvSignLanguage.setVideoURI(videoUri)
-        binding.vvSignLanguage.start()
-        binding.vvSignLanguage.setOnPreparedListener { mp ->
-            mp.isLooping = true
+        binding.vvSignLanguage.setOnPreparedListener { mediaPlayer ->
+            // Mulai memutar video begitu buffer cukup
+            mediaPlayer.start()
+            mediaPlayer.isLooping = true
         }
+
 
         binding.vvSignLanguage.setOnErrorListener { _, _, _ ->
-            Toast.makeText(this@TranslateActivity, "Error loading video", Toast.LENGTH_SHORT).show()
+            // Tampilkan pesan error jika terjadi kegagalan
+            Toast.makeText(this, "Error loading video", Toast.LENGTH_SHORT).show()
             true
         }
-
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // Animasi balik

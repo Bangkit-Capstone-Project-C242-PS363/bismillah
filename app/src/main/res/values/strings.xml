@@ -2,7 +2,7 @@
     <string name="app_name">Sign Master</string>
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
-
+    <string name="locked_icon_description">This chapter is locked</string>
     <string name="welcome">Welcome!</string>
     <string name="username">Username</string>
     <string name="translate">Translate</string>

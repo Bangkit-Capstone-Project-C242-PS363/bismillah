@@ -49,6 +49,19 @@
             card_view:layout_constraintStart_toStartOf="@+id/circleStroke"
             card_view:layout_constraintTop_toTopOf="@+id/circleStroke" />
 
+        <!-- Lock Icon (Hidden by Default) -->
+        <ImageView
+            android:id="@+id/iconLock"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_lock"
+            android:contentDescription="@string/locked_icon_description"
+            android:visibility="gone"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"/>
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -50,7 +50,7 @@ class ProfileFragment : Fragment() {
         }
 
         // Observe and set the subscription status from DataStore
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             val pref = UserPreference.getInstance(requireContext().dataStore)
             pref.getSubscriptionStatus().collect { isSubscribed ->
                 binding.switchSubscription.isChecked = isSubscribed
@@ -78,7 +78,7 @@ class ProfileFragment : Fragment() {
      * Calls the subscribe API to activate the user's subscription.
      */
     private fun subscribe() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             val pref = UserPreference.getInstance(requireContext().dataStore)
             val token = pref.getLoginToken().first()
             try {
@@ -105,7 +105,7 @@ class ProfileFragment : Fragment() {
      * Calls the unsubscribe API to deactivate the user's subscription.
      */
     private fun unsubscribe() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             val pref = UserPreference.getInstance(requireContext().dataStore)
             val token = pref.getLoginToken().first()
             try {

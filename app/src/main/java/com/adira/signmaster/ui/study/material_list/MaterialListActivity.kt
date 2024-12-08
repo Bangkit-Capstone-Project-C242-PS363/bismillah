@@ -45,6 +45,7 @@ class MaterialListActivity : AppCompatActivity() {
                 putExtra("MATERIAL_INDEX", position)
             }
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         binding.rvMaterialList.layoutManager = LinearLayoutManager(this)
