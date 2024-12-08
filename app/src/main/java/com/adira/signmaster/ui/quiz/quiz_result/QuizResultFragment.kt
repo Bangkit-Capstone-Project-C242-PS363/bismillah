@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.adira.signmaster.R
 import com.adira.signmaster.data.model.Quiz
@@ -22,6 +23,13 @@ class QuizResultFragment : Fragment() {
         super.onCreate(savedInstanceState)
         quizList = arguments?.getParcelableArrayList(ARG_QUIZ_LIST) ?: emptyList()
         correctAnswersCount = arguments?.getInt(ARG_CORRECT_COUNT) ?: 0
+
+        // Handle back press
+        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigateToQuizActivity()
+            }
+        })
     }
 
     override fun onCreateView(
@@ -47,13 +55,8 @@ class QuizResultFragment : Fragment() {
 
         // Tombol keluar
         view.findViewById<Button>(R.id.btnExitQuiz).setOnClickListener {
-            val intent = Intent(requireContext(), QuizActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
-            activity?.finish() // Tutup aktivitas saat ini
+            navigateToQuizActivity()
         }
-
 
         return view
     }
@@ -67,6 +70,13 @@ class QuizResultFragment : Fragment() {
             .oneShot(rootView, 100)
     }
 
+    private fun navigateToQuizActivity() {
+        val intent = Intent(requireContext(), QuizActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
+        activity?.finish() // Tutup aktivitas saat ini
+    }
 
     companion object {
         private const val ARG_QUIZ_LIST = "quiz_list"
