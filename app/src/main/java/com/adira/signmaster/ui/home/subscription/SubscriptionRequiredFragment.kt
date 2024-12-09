@@ -23,14 +23,13 @@ class SubscriptionRequiredFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Close the fragment when the close button is clicked
         binding.btnClose.setOnClickListener {
-            dismiss() // Closes the bottom sheet fragment
+            dismiss()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Set the binding to null to prevent memory leaks
+        _binding = null
     }
 }

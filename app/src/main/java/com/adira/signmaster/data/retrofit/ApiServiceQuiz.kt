@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ApiServiceQuiz {
-    @GET("getchapters") // Sesuaikan dengan API
+    @GET("getchapters")
     suspend fun getChapters(): Response<ChapterResponse>
 
     @GET("getquizz/{chapterId}")

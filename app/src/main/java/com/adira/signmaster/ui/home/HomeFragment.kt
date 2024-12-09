@@ -6,22 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adira.signmaster.R
-import com.adira.signmaster.data.pref.UserPreference
-import com.adira.signmaster.data.pref.dataStore
 import com.adira.signmaster.databinding.FragmentHomeBinding
-import com.adira.signmaster.ui.home.subscription.SubscriptionRequiredFragment
 import com.adira.signmaster.ui.quiz.QuizActivity
 import com.adira.signmaster.ui.study.StudyActivity
 import com.adira.signmaster.ui.translate.TranslateActivity
 import com.adira.signmaster.ui.viewmodelfactory.ViewModelFactory
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -31,7 +25,6 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels {
         ViewModelFactory.getInstance(requireActivity().application)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,66 +39,46 @@ class HomeFragment : Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
-
         homeViewModel.getUsername().observe(viewLifecycleOwner) { username ->
             binding.textUserName.text = username
         }
 
         binding.cardStudy.setOnClickListener {
-            val intent = Intent(requireContext(), StudyActivity::class.java)
-            startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
-
+            navigateToActivity(StudyActivity::class.java)
         }
 
         binding.cardQuiz.setOnClickListener {
-            val intent = Intent(requireContext(), QuizActivity::class.java)
-            startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
+            navigateToActivity(QuizActivity::class.java)
         }
-
 
         binding.cardTranslate.setOnClickListener {
-            val intent = Intent(requireContext(), TranslateActivity::class.java)
-            startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
-
+            navigateToActivity(TranslateActivity::class.java)
         }
 
-
-        val cardItems = listOf(
-            CardItem("Card 1", R.drawable.placeholder_image),
-            CardItem("Card 2", R.drawable.placeholder_image),
-            CardItem("Card 3", R.drawable.placeholder_image),
-        )
-
-        val cardAdapter = CardAdapter(cardItems)
-        binding.rvNews.apply {
-            setHasFixedSize(true)
-            adapter = cardAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+        homeViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
-    }
+        homeViewModel.getNews()
 
-    private fun checkSubscriptionStatusAndNavigate() {
-        lifecycleScope.launch {
-            val pref = UserPreference.getInstance(requireContext().dataStore)
-            val isSubscribed = pref.getSubscriptionStatus().first()
-
-            if (isSubscribed) {
-                // User is subscribed, navigate to QuizActivity
-                val intent = Intent(requireContext(), QuizActivity::class.java)
-                startActivity(intent)
-            } else {
-                // User is not subscribed, show the SubscriptionRequiredFragment
-                showSubscriptionRequiredFragment()
+        homeViewModel.newsList.observe(viewLifecycleOwner) { newsList ->
+            val newsAdapter = NewsAdapter(newsList)
+            binding.rvNews.apply {
+                setHasFixedSize(true)
+                adapter = newsAdapter
+                layoutManager = LinearLayoutManager(requireContext())
             }
         }
+
+        homeViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        }
     }
-    private fun showSubscriptionRequiredFragment() {
-        val subscriptionFragment = SubscriptionRequiredFragment()
-        subscriptionFragment.show(parentFragmentManager, "SubscriptionRequiredFragment")
+
+    private fun navigateToActivity(activityClass: Class<*>) {
+        val intent = Intent(requireContext(), activityClass)
+        startActivity(intent)
+        activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     override fun onDestroyView() {
@@ -113,3 +86,5 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 }
+
+

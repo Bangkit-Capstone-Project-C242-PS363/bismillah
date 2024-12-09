@@ -33,7 +33,7 @@ class QuizActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        fetchVipStatus() // Fetch VIP status
+        fetchVipStatus()
     }
 
     private fun fetchVipStatus() {

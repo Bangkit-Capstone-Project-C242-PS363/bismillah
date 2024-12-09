@@ -2,10 +2,7 @@ package com.adira.signmaster.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.adira.signmaster.R
@@ -13,8 +10,8 @@ import com.adira.signmaster.data.response.News
 import com.adira.signmaster.databinding.CardNewsBinding
 import com.bumptech.glide.Glide
 
-class CardAdapter(private val newsList: List<News>) :
-    RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
+class NewsAdapter(private val newsList: List<News>) :
+    RecyclerView.Adapter<NewsAdapter.CardViewHolder>() {
 
     inner class CardViewHolder(private val binding: CardNewsBinding) :
         RecyclerView.ViewHolder(binding.root) {

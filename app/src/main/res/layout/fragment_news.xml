@@ -17,9 +17,8 @@
         android:layout_height="wrap_content"
         android:text="@string/news_name"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:textColor="@color/dark_blue"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_bold"
         android:paddingTop="16dp"
         android:paddingBottom="4dp" />
 
@@ -30,6 +29,6 @@
         android:text="@string/news_description"
         android:textSize="16sp"
         android:textColor="@color/dark_blue"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_regular"
         android:paddingTop="24dp" />
 </LinearLayout>

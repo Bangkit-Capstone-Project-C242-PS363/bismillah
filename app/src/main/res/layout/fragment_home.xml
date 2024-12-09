@@ -49,6 +49,16 @@
             app:layout_constraintStart_toStartOf="@+id/textWelcome"
             app:layout_constraintTop_toBottomOf="@+id/textWelcome" />
 
+        <ImageView
+            android:id="@+id/ivVip"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/vip_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/textUserName"
+            app:layout_constraintStart_toEndOf="@+id/textUserName"
+            app:layout_constraintTop_toTopOf="@+id/textUserName" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -240,6 +250,17 @@
         android:text="@string/news"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/rvNews"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/rvNews"
+        app:layout_constraintTop_toTopOf="@+id/rvNews" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNews"

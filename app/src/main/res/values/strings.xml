@@ -49,6 +49,7 @@
     <string name="logout_success">You\'ve successfully logged out</string>
     <string name="prediction_placeholder">Prediction</string>
     <string name="fps_placeholder">Fps</string>
-    <string name="title_scan">Scan</string>s
+    <string name="title_scan">Scan</string>
+    <string name="news_description">News Description</string>s
 
 </resources>

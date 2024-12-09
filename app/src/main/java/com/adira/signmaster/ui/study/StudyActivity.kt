@@ -22,7 +22,7 @@ class StudyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStudyBinding
     private val viewModel: StudyViewModel by viewModels()
     private lateinit var adapter: LearnMaterialAdapter
-    private var isVip: Boolean = false // VIP status
+    private var isVip: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,11 @@ class StudyActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        fetchVipStatus() // Fetch VIP status
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+
+        fetchVipStatus()
     }
 
     private fun fetchVipStatus() {
