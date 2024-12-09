@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.adira.signmaster.R
 import com.adira.signmaster.databinding.ActivityCameraTranslateBinding
 
 class CameraTranslateActivity : AppCompatActivity() {
@@ -339,7 +340,13 @@ class CameraTranslateActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
     companion object {
         private const val TAG = "CameraTranslateActivity"
     }
+
 }

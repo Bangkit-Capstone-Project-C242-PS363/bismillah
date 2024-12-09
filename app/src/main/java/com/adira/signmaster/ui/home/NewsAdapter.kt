@@ -3,6 +3,7 @@ package com.adira.signmaster.ui.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.adira.signmaster.R
@@ -33,6 +34,10 @@ class NewsAdapter(private val newsList: List<News>) :
 
                 val navController = Navigation.findNavController(it)
                 navController.navigate(R.id.action_homeFragment_to_newsFragment, bundle)
+                // Add custom transition animations
+                (binding.root.context as? AppCompatActivity)?.overridePendingTransition(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left)
             }
         }
     }

@@ -9,13 +9,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adira.signmaster.R
+import com.adira.signmaster.data.pref.UserPreference
+import com.adira.signmaster.data.pref.dataStore
 import com.adira.signmaster.databinding.FragmentHomeBinding
 import com.adira.signmaster.ui.quiz.QuizActivity
 import com.adira.signmaster.ui.study.StudyActivity
 import com.adira.signmaster.ui.translate.TranslateActivity
 import com.adira.signmaster.ui.viewmodelfactory.ViewModelFactory
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -52,12 +57,17 @@ class HomeFragment : Fragment() {
         }
 
         binding.cardTranslate.setOnClickListener {
-            navigateToActivity(TranslateActivity::class.java)
+            val intent = Intent(requireContext(), TranslateActivity::class.java)
+            startActivity(intent)
+            requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Add animation
         }
+
 
         homeViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
+        checkSubscriptionStatus()
+
 
         homeViewModel.getNews()
 
@@ -81,6 +91,17 @@ class HomeFragment : Fragment() {
         activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
+    private fun checkSubscriptionStatus() {
+        lifecycleScope.launch {
+            val pref = UserPreference.getInstance(requireContext().dataStore)
+            val isSubscribed = pref.getSubscriptionStatus().first()
+            if (isSubscribed) {
+                binding.ivVip.visibility = View.VISIBLE
+            } else {
+                binding.ivVip.visibility = View.GONE
+            }
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

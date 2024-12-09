@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.adira.signmaster.R
 import com.adira.signmaster.databinding.FragmentNewsBinding
@@ -43,6 +44,11 @@ class NewsFragment : Fragment() {
                 .placeholder(R.drawable.placeholder_image)
                 .into(imgNews)
         }
+        // Handle back button click with animation
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
     }
 
     override fun onDestroyView() {
@@ -51,5 +57,6 @@ class NewsFragment : Fragment() {
 
         (activity as? AppCompatActivity)?.findViewById<BottomNavigationView>(R.id.nav_view)?.visibility = View.VISIBLE
     }
+
 }
 

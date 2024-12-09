@@ -66,6 +66,9 @@ class QuizMaterialActivity : AppCompatActivity() {
 
     private fun fetchQuizzes(chapterId: Int) {
         viewModel.fetchQuiz(chapterId)
+        viewModel.loading.observe(this) { isLoading ->
+            binding.loadingProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
         viewModel.quiz.observe(this) { quizzes ->
             if (!quizzes.isNullOrEmpty()) {
                 quizList = quizzes

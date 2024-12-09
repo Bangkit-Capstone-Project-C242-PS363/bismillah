@@ -50,6 +50,7 @@
     <string name="prediction_placeholder">Prediction</string>
     <string name="fps_placeholder">Fps</string>
     <string name="title_scan">Scan</string>
-    <string name="news_description">News Description</string>s
-
+    <string name="news_description">News Description</string>
+    <string name="splash_logo">logo</string>
+    <string name="splash_tagline">Learn with SignMaster</string>
 </resources>

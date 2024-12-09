@@ -1,6 +1,7 @@
 package com.adira.signmaster.ui.quiz
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,8 @@ class QuizActivity : AppCompatActivity() {
         }
 
         fetchVipStatus()
+        observeLoadingState()
+
     }
 
     private fun fetchVipStatus() {
@@ -43,6 +46,18 @@ class QuizActivity : AppCompatActivity() {
 
             setupRecyclerView()
             fetchChapters()
+        }
+    }
+
+    private fun observeLoadingState() {
+        viewModel.loading.observe(this) { isLoading ->
+            if (isLoading) {
+                binding?.progressBar?.visibility = View.VISIBLE
+                binding?.recyclerViewQuiz?.visibility = View.GONE
+            } else {
+                binding?.progressBar?.visibility = View.GONE
+                binding?.recyclerViewQuiz?.visibility = View.VISIBLE
+            }
         }
     }
 
