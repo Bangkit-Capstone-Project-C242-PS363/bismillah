@@ -32,7 +32,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
             preferences[EMAIL] = user.email
-            preferences[SUBSCRIPTION_STATUS_KEY] = user.isSubscribed // Save subscription status
+            preferences[SUBSCRIPTION_STATUS_KEY] = user.isSubscribed
         }
     }
 
@@ -44,7 +44,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
 
     fun getSubscriptionStatus(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
-            preferences[SUBSCRIPTION_STATUS_KEY] ?: false // Default to false if not present
+            preferences[SUBSCRIPTION_STATUS_KEY] ?: false
         }
     }
 
@@ -61,7 +61,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
                 token = preferences[TOKEN_KEY] ?: "",
                 isLogin = preferences[IS_LOGIN_KEY] == true,
                 email = preferences[EMAIL] ?: "",
-                isSubscribed = preferences[SUBSCRIPTION_STATUS_KEY] ?: false // Default false
+                isSubscribed = preferences[SUBSCRIPTION_STATUS_KEY] ?: false
             )
         }
     }
@@ -80,7 +80,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
         private val EMAIL = stringPreferencesKey("email")
-        private val SUBSCRIPTION_STATUS_KEY = booleanPreferencesKey("subscription_status") // New key for subscription status
+        private val SUBSCRIPTION_STATUS_KEY = booleanPreferencesKey("subscription_status")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

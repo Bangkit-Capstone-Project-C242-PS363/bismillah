@@ -18,7 +18,6 @@ class TranslateViewModel : ViewModel() {
         isLoading.value = true
 
         val apiService = ApiConfigMotion.getApiService()
-
         apiService.sendMotionData(MotionData(data = text)).enqueue(object : Callback<ToMotionResponse> {
             override fun onResponse(call: Call<ToMotionResponse>, response: Response<ToMotionResponse>) {
                 isLoading.value = false

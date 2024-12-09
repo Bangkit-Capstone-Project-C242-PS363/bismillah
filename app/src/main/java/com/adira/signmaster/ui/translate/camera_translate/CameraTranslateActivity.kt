@@ -19,20 +19,21 @@ import android.graphics.PointF
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.adira.signmaster.R
+import androidx.lifecycle.MutableLiveData
 import com.adira.signmaster.databinding.ActivityCameraTranslateBinding
 
 class CameraTranslateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraTranslateBinding
     private lateinit var cameraExecutor: ExecutorService
     private var webSocketClient: WebSocketClient? = null
-
+    private val isConnecting = MutableLiveData<Boolean>()
     private var isProcessingFrame = false
 
     private var lastFrameSentTime = 0L
@@ -58,15 +59,21 @@ class CameraTranslateActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        setupWebSocket()
-        initializeCamera()
+        isConnecting.observe(this) { connecting ->
+            binding.progressBar.visibility = if (connecting) View.VISIBLE else View.GONE
+        }
+
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         binding.fabSwitchCamera.setOnClickListener {
             isUsingFrontCamera = !isUsingFrontCamera
             startCamera()
         }
+
+        setupWebSocket()
+        initializeCamera()
     }
+
 
     private fun initializeCamera() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -78,17 +85,16 @@ class CameraTranslateActivity : AppCompatActivity() {
     }
 
     private fun setupWebSocket() {
+        isConnecting.postValue(true)
         val serverUrl = "wss://inference-model-kji5w4ybbq-et.a.run.app/"
-        Log.d(TAG, "Initializing WebSocket connection to: $serverUrl")
-
         webSocketClient = object : WebSocketClient(URI(serverUrl)) {
             override fun onOpen(handshake: ServerHandshake?) {
                 Log.d(TAG, "WebSocket connection established")
                 runOnUiThread {
+                    isConnecting.postValue(false)
                     Toast.makeText(applicationContext, "Server Connected", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onMessage(message: String?) {
                 message?.let { handleServerResponse(it) }
             }
@@ -96,17 +102,18 @@ class CameraTranslateActivity : AppCompatActivity() {
             override fun onClose(code: Int, reason: String?, remote: Boolean) {
                 Log.d(TAG, "WebSocket connection closed: $reason")
                 runOnUiThread {
+                    isConnecting.postValue(false)
                     Toast.makeText(applicationContext, "Server Disconnected", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onError(ex: Exception?) {
                 Log.e(TAG, "WebSocket error occurred: ${ex?.message}")
+                runOnUiThread {
+                    isConnecting.postValue(false)
+                }
             }
         }.apply { connect() }
     }
-
-
 
     private fun updatePredictionDisplay(predictions: JSONArray, landmarks: JSONArray?) {
         runOnUiThread {
@@ -117,7 +124,6 @@ class CameraTranslateActivity : AppCompatActivity() {
                     val confidence = prediction.getDouble("confidence")
                     append("#${i + 1}: $sign (${String.format("%.2f", confidence * 100)}%)\n")
                 }
-
                 landmarks?.let {
                     append("\nDetected ${it.length()} landmarks")
                 }
@@ -131,17 +137,16 @@ class CameraTranslateActivity : AppCompatActivity() {
 
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
-
             val cameraSelector = if (isUsingFrontCamera) {
                 CameraSelector.DEFAULT_FRONT_CAMERA
             } else {
                 CameraSelector.DEFAULT_BACK_CAMERA
             }
-
             val preview = Preview.Builder()
                 .build()
                 .also { it.setSurfaceProvider(binding.viewFinder.surfaceProvider) }
 
+            // Configure image analysis
             val imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build()
@@ -150,7 +155,6 @@ class CameraTranslateActivity : AppCompatActivity() {
                         processImage(imageProxy)
                     }
                 }
-
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
@@ -215,8 +219,6 @@ class CameraTranslateActivity : AppCompatActivity() {
         )
     }
 
-
-
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
@@ -265,14 +267,12 @@ class CameraTranslateActivity : AppCompatActivity() {
                     Bitmap.Config.ARGB_8888
                 )
                 val canvas = Canvas(drawingBitmap)
-
                 landmarks?.let {
                     drawHandLandmarks(canvas, it)
                 }
 
                 runOnUiThread {
                     updatePredictionDisplay(predictions,landmarks)
-
                     binding.overlayView.setImageBitmap(drawingBitmap)
                 }
             } else {
@@ -289,7 +289,6 @@ class CameraTranslateActivity : AppCompatActivity() {
     private fun drawHandLandmarks(canvas: Canvas, landmarks: JSONArray) {
         val width = canvas.width.toFloat()
         val height = canvas.height.toFloat()
-
         val points = mutableListOf<PointF>()
 
         for (i in 0 until landmarks.length()) {
@@ -314,13 +313,7 @@ class CameraTranslateActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-    }
-
     companion object {
         private const val TAG = "CameraTranslateActivity"
     }
-
 }

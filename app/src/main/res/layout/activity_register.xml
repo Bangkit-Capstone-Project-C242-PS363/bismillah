@@ -23,6 +23,8 @@
             android:layout_marginStart="27dp"
             android:layout_marginEnd="27dp"
             android:layout_marginTop="16dp"
+            android:alpha="0"
+            tools:alpha="100"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:startIconDrawable="@drawable/baseline_account_circle_24"
             app:layout_constraintTop_toTopOf="parent">
@@ -44,6 +46,8 @@
             android:layout_marginStart="27dp"
             android:layout_marginEnd="27dp"
             android:layout_marginTop="16dp"
+            android:alpha="0"
+            tools:alpha="100"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:startIconDrawable="@drawable/baseline_email_24"
             app:layout_constraintTop_toBottomOf="@+id/fullNameInputLayout">
@@ -65,6 +69,8 @@
             android:layout_marginStart="27dp"
             android:layout_marginEnd="27dp"
             android:layout_marginTop="16dp"
+            android:alpha="0"
+            tools:alpha="100"
             app:startIconDrawable="@drawable/baseline_lock_24"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
@@ -86,6 +92,8 @@
             android:layout_marginStart="27dp"
             android:layout_marginEnd="27dp"
             android:layout_marginTop="16dp"
+            android:alpha="0"
+            tools:alpha="100"
             app:startIconDrawable="@drawable/baseline_lock_24"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout">
@@ -110,6 +118,8 @@
             android:fontFamily="@font/poppins_bold"
             android:padding="8dp"
             android:elevation="8dp"
+            android:alpha="0"
+            tools:alpha="100"
             android:text="@string/register"
             android:textColor="@color/dark_blue"
             android:textSize="16sp"
@@ -126,6 +136,8 @@
             android:text="@string/alr_have_acc"
             android:textColor="@color/dark_blue"
             android:textSize="16sp"
+            android:alpha="0"
+            tools:alpha="100"
             app:layout_constraintEnd_toEndOf="@+id/btnRegister"
             app:layout_constraintStart_toStartOf="@+id/btnRegister"
             app:layout_constraintTop_toBottomOf="@+id/btnRegister" />

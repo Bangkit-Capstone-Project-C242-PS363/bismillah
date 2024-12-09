@@ -7,14 +7,5 @@
     <color name="orange">#EB8317</color>
     <color name="red">#FF0000</color>
     <color name="dark_blue">#10375C</color>
-    <color name="gray">#808080</color>
-    <color name="correct_answer">#4CAF50</color>
-    <color name="correct_answer_pressed">#388E3C</color>
-    <color name="wrong_answer">#F44336</color>
-    <color name="wrong_answer_pressed">#D32F2F</color>
-    <color name="button_default">#FFFFFF</color>
-    <color name="button_pressed">#E0E0E0</color>
-
-
-
+    <color name="gray">#808080</color>>
 </resources>

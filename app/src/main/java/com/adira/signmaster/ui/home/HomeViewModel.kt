@@ -39,13 +39,13 @@ class HomeViewModel(
                 if (response.isSuccessful && response.body() != null) {
                     _newsList.value = response.body()
                 } else {
-                    _error.value = "Gagal memuat berita: ${response.message()}"
+                    _error.value = "Failed to load news: ${response.message()}"
                 }
             }
 
             override fun onFailure(call: Call<List<News>>, t: Throwable) {
                 _loading.value = false
-                _error.value = "Terjadi kesalahan: ${t.message}"
+                _error.value = "Error occurred: ${t.message}"
             }
         })
     }

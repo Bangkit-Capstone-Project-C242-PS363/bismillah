@@ -38,19 +38,8 @@ class RepositoryAuth private constructor(
         return pref.getEmail()
     }
 
-
-    fun getToken(): Flow<String> {
-        return pref.getLoginToken()
-    }
-
-
     suspend fun saveSession(user: UserModel) {
         pref.saveSession(user)
-    }
-
-
-    suspend fun logout() {
-        pref.logout()
     }
 
     companion object {

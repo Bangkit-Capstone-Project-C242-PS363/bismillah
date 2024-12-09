@@ -3,12 +3,16 @@ package com.adira.signmaster.ui.study.material_list
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adira.signmaster.R
 import com.adira.signmaster.databinding.ActivityMaterialListBinding
+import com.adira.signmaster.ui.quiz.quiz_material.QuizMaterialActivity.Companion.EXTRA_CHAPTER_TITLE
 import com.adira.signmaster.ui.study.material_list.detail_material.DetailMaterialActivity
 import com.bumptech.glide.Glide
 

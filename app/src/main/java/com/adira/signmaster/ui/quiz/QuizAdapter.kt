@@ -67,7 +67,6 @@ class ChapterAdapter(
                 background.alpha = 1.0f
             }
 
-            // Add animation effect
             itemView.setOnClickListener {
                 val animation = AnimationUtils.loadAnimation(itemView.context, R.anim.scale_animation)
                 itemView.startAnimation(animation)

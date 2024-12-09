@@ -17,8 +17,12 @@ class MaterialListViewModel : ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> get() = _loading
+
     fun fetchChapterDetails(chapterId: String) {
         viewModelScope.launch {
+            _loading.value = true
             try {
                 val response = ApiConfigLearn.instance.fetchChapterDetails(chapterId)
                 if (response.isSuccessful) {
@@ -34,6 +38,8 @@ class MaterialListViewModel : ViewModel() {
                 _errorMessage.postValue("HTTP Error: ${e.message}")
             } catch (e: Exception) {
                 _errorMessage.postValue("Unexpected Error: ${e.message}")
+            } finally {
+                _loading.value = false // Sembunyikan ProgressBar
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.adira.signmaster.ui.register
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -33,6 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         setupAction()
+        playAnimation()
     }
 
     private fun setupAction() {
@@ -108,6 +111,27 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    private fun playAnimation() {
+        val fullNameInputLayout = ObjectAnimator.ofFloat(binding.fullNameInputLayout, View.ALPHA, 1f).setDuration(100)
+        val emailInputLayout = ObjectAnimator.ofFloat(binding.emailInputLayout, View.ALPHA, 1f).setDuration(100)
+        val passwordInputLayout = ObjectAnimator.ofFloat(binding.passwordInputLayout, View.ALPHA, 1f).setDuration(100)
+        val confirmPasswordInputLayout = ObjectAnimator.ofFloat(binding.confirmPasswordInputLayout, View.ALPHA, 1f).setDuration(100)
+        val btnRegister = ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(100)
+        val navigateToLogin = ObjectAnimator.ofFloat(binding.navigateToLogin, View.ALPHA, 1f).setDuration(100)
+        AnimatorSet().apply {
+            playSequentially(
+                fullNameInputLayout,
+                emailInputLayout,
+                passwordInputLayout,
+                confirmPasswordInputLayout,
+                btnRegister,
+                navigateToLogin
+            )
+            startDelay = 100
+        }.start()
+    }
+
+
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -119,7 +143,6 @@ class RegisterActivity : AppCompatActivity() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
-
 }
 
 

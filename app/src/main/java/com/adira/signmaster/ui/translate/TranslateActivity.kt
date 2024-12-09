@@ -3,10 +3,15 @@ package com.adira.signmaster.ui.translate
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import com.adira.signmaster.R
 import com.adira.signmaster.databinding.ActivityTranslateBinding
@@ -58,13 +63,11 @@ class TranslateActivity : AppCompatActivity() {
         binding.fabCamera.setOnClickListener {
             val intent = Intent(this, CameraTranslateActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
     private fun displayVideo(url: String) {
         val videoUri = Uri.parse(url)
-
         binding.vvSignLanguage.setVideoURI(videoUri)
         binding.vvSignLanguage.setOnPreparedListener { mediaPlayer ->
             mediaPlayer.start()

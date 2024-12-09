@@ -1,5 +1,7 @@
 package com.adira.signmaster.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -33,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         setupAction()
+        playAnimation()
     }
 
     private fun setupAction() {
@@ -113,5 +116,32 @@ class LoginActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.ivLogo, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val title = ObjectAnimator.ofFloat(binding.ivLogo, View.ALPHA, 1f).setDuration(100)
+        val emailInputLayout =
+            ObjectAnimator.ofFloat(binding.emailInputLayout, View.ALPHA, 1f).setDuration(100)
+        val passwordInputLayout =
+            ObjectAnimator.ofFloat(binding.passwordInputLayout, View.ALPHA, 1f).setDuration(100)
+        val login = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(100)
+        val navigateToRegister =
+            ObjectAnimator.ofFloat(binding.navigateToRegister, View.ALPHA, 1f).setDuration(100)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title,
+                emailInputLayout,
+                passwordInputLayout,
+                login,
+                navigateToRegister
+            )
+            startDelay = 100
+        }.start()
+    }
 }
 
