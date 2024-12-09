@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import com.adira.signmaster.data.repository.RepositoryAuth
 import com.adira.signmaster.data.response.News
 import com.adira.signmaster.data.retrofit.ApiConfigNews

@@ -22,7 +22,6 @@ class ViewModelFactory(
             RegisterViewModel::class.java -> RegisterViewModel(repository) as T
             HomeViewModel::class.java -> HomeViewModel(repository) as T
             ProfileViewModel::class.java -> ProfileViewModel(repository) as T
-//            StudyViewModel::class.java -> StudyViewModel(repository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

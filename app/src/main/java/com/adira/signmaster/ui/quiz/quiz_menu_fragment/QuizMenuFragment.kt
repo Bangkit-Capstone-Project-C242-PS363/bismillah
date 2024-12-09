@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.adira.signmaster.R
-import com.adira.signmaster.ui.quiz.QuizViewModel
 import com.adira.signmaster.ui.quiz.quiz_material.QuizMaterialActivity
 import com.adira.signmaster.ui.study.StudyActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -41,9 +39,8 @@ class QuizMenuFragment : Fragment() {
             startStudyActivity()
         }
 
-        // Tombol "Back"
         view.findViewById<FloatingActionButton>(R.id.fabMenu).setOnClickListener {
-            activity?.onBackPressed() // Navigasi ke halaman sebelumnya
+            activity?.onBackPressed()
         }
         return view
     }
@@ -53,10 +50,10 @@ class QuizMenuFragment : Fragment() {
     private fun startQuizActivity(chapterId: Int, chapterTitle: String) {
         val intent = Intent(requireContext(), QuizMaterialActivity::class.java).apply {
             putExtra(QuizMaterialActivity.EXTRA_CHAPTER_ID, chapterId)
-            putExtra(QuizMaterialActivity.EXTRA_CHAPTER_TITLE, chapterTitle) // Kirim judul chapter
+            putExtra(QuizMaterialActivity.EXTRA_CHAPTER_TITLE, chapterTitle)
         }
         startActivity(intent)
-        activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Tambahkan transisi
+        activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     private fun startStudyActivity() {

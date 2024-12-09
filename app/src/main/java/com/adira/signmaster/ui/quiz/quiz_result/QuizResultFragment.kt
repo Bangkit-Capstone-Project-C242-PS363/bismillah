@@ -24,7 +24,6 @@ class QuizResultFragment : Fragment() {
         quizList = arguments?.getParcelableArrayList(ARG_QUIZ_LIST) ?: emptyList()
         correctAnswersCount = arguments?.getInt(ARG_CORRECT_COUNT) ?: 0
 
-        // Handle back press
         requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 navigateToQuizActivity()
@@ -38,22 +37,18 @@ class QuizResultFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_quiz_result, container, false)
 
-        // Hitung skor dalam persentase
         val totalQuestions = quizList.size
         val scorePercentage = if (totalQuestions > 0) {
             (correctAnswersCount * 100) / totalQuestions
         } else {
-            0 // Default jika tidak ada pertanyaan
+            0
         }
 
-        // Tampilkan skor persentase
         view.findViewById<TextView>(R.id.tvQuizResult).text =
             getString(R.string.quiz_result_percentage, scorePercentage)
 
-        // Tambahkan animasi confetti
         triggerConfetti(view)
 
-        // Tombol keluar
         view.findViewById<Button>(R.id.btnExitQuiz).setOnClickListener {
             navigateToQuizActivity()
         }
@@ -62,8 +57,8 @@ class QuizResultFragment : Fragment() {
     }
 
     private fun triggerConfetti(view: View) {
-        val rootView = view.findViewById<View>(R.id.rootQuizResult) // ID root layout
-        ParticleSystem(requireActivity(), 100, R.drawable.star, 3000) // Gunakan requireActivity()
+        val rootView = view.findViewById<View>(R.id.rootQuizResult)
+        ParticleSystem(requireActivity(), 100, R.drawable.star, 3000)
             .setSpeedRange(0.2f, 0.5f)
             .setFadeOut(2000)
             .setAcceleration(0.0001f, 90)
@@ -74,8 +69,8 @@ class QuizResultFragment : Fragment() {
         val intent = Intent(requireContext(), QuizActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
-        activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Transisi
-        activity?.finish() // Tutup aktivitas saat ini
+        activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        activity?.finish()
     }
 
     companion object {

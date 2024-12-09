@@ -60,29 +60,24 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // Room Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-    // Retrofit for Networking
     implementation(libs.retrofit2.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
-    // Glide for Image Loading
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
     implementation (libs.core)
 
-    implementation("org.java-websocket:Java-WebSocket:1.5.3")
+    implementation(libs.java.websocket)
 
-    // Camera dependencies
-    implementation("androidx.camera:camera-core:1.2.2")
-    implementation("androidx.camera:camera-camera2:1.2.2")
-    implementation("androidx.camera:camera-lifecycle:1.2.2")
-    implementation("androidx.camera:camera-view:1.2.2")
+    implementation(libs.androidx.camera.core)
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
 
 
 }

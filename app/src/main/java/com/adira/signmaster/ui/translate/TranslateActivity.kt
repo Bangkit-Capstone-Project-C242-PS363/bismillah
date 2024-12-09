@@ -3,15 +3,10 @@ package com.adira.signmaster.ui.translate
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import com.adira.signmaster.R
 import com.adira.signmaster.databinding.ActivityTranslateBinding
@@ -63,24 +58,21 @@ class TranslateActivity : AppCompatActivity() {
         binding.fabCamera.setOnClickListener {
             val intent = Intent(this, CameraTranslateActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Add animation
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
     private fun displayVideo(url: String) {
         val videoUri = Uri.parse(url)
 
-        // Konfigurasi video view untuk streaming progresif
         binding.vvSignLanguage.setVideoURI(videoUri)
         binding.vvSignLanguage.setOnPreparedListener { mediaPlayer ->
-            // Mulai memutar video begitu buffer cukup
             mediaPlayer.start()
             mediaPlayer.isLooping = true
         }
 
 
         binding.vvSignLanguage.setOnErrorListener { _, _, _ ->
-            // Tampilkan pesan error jika terjadi kegagalan
             Toast.makeText(this, "Error loading video", Toast.LENGTH_SHORT).show()
             true
         }

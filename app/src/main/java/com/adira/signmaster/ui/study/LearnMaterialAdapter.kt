@@ -11,7 +11,7 @@ import com.adira.signmaster.databinding.CardLearnMaterialBinding
 import com.bumptech.glide.Glide
 
 class LearnMaterialAdapter(
-    private val isVip: Boolean, // Pass VIP status from StudyActivity
+    private val isVip: Boolean,
     private val onItemClick: (Chapter) -> Unit
 ) : ListAdapter<Chapter, LearnMaterialAdapter.LearnMaterialViewHolder>(DiffCallback()) {
 
@@ -40,20 +40,18 @@ class LearnMaterialAdapter(
                 .load(chapter.icon_url)
                 .into(binding.iconStudyCard)
 
-            // Determine lock state dynamically
             val isLocked = chapter.locked && !isVip
 
             if (isLocked) {
                 binding.iconLock.visibility = View.VISIBLE
-                binding.iconStudyCard.alpha = 0.5f // Dim the card icon
-                binding.circleStroke.alpha = 0.5f // Dim the background circle
+                binding.iconStudyCard.alpha = 0.5f
+                binding.circleStroke.alpha = 0.5f
             } else {
                 binding.iconLock.visibility = View.GONE
-                binding.iconStudyCard.alpha = 1.0f // Reset brightness
+                binding.iconStudyCard.alpha = 1.0f
                 binding.circleStroke.alpha = 1.0f
             }
 
-            // Handle click events
             binding.root.setOnClickListener {
                 onItemClick(chapter)
             }

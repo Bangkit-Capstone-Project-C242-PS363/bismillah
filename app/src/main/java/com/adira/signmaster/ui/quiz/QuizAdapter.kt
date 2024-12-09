@@ -12,8 +12,8 @@ import com.adira.signmaster.data.model.Chapter
 import com.bumptech.glide.Glide
 
 class ChapterAdapter(
-    private val isVip: Boolean, // Pass VIP status
-    private val onClick: (Int, String, Boolean) -> Unit // Pass locked status too
+    private val isVip: Boolean,
+    private val onClick: (Int, String, Boolean) -> Unit
 ) : RecyclerView.Adapter<ChapterAdapter.ChapterViewHolder>() {
 
     private val chapters = mutableListOf<Chapter>()

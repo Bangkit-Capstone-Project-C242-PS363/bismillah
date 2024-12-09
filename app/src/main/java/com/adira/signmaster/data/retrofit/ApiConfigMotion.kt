@@ -11,7 +11,6 @@ object ApiConfigMotion {
     private const val BASE_URL = "http://34.50.84.107/"
 
     fun getApiService(): ApiServiceMotion {
-        // Tambahkan interceptor logging
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }

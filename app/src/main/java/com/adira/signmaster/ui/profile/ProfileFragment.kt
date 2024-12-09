@@ -40,7 +40,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Observe and set the user's username and email
         profileViewModel.getUsername().observe(viewLifecycleOwner) { username ->
             binding.tvUsername.text = username
         }
@@ -49,7 +48,6 @@ class ProfileFragment : Fragment() {
             binding.tvEmail.text = email
         }
 
-        // Observe and set the subscription status from DataStore
         viewLifecycleOwner.lifecycleScope.launch {
             val pref = UserPreference.getInstance(requireContext().dataStore)
             pref.getSubscriptionStatus().collect { isSubscribed ->
@@ -57,9 +55,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // Handle switch toggle for subscription
         binding.switchSubscription.setOnCheckedChangeListener { _, isChecked ->
-            // Disable the switch to avoid multiple requests
             binding.switchSubscription.isEnabled = false
             if (isChecked) {
                 subscribe()
@@ -68,15 +64,12 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // Handle logout action
         binding.tvLogout.setOnClickListener {
             showLogoutConfirmationDialog()
         }
     }
 
-    /**
-     * Calls the subscribe API to activate the user's subscription.
-     */
+
     private fun subscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
             val pref = UserPreference.getInstance(requireContext().dataStore)
@@ -87,23 +80,20 @@ class ProfileFragment : Fragment() {
                     pref.updateSubscriptionStatus(true)
                 } else {
                     Toast.makeText(requireContext(), "Failed to subscribe: ${response.message}", Toast.LENGTH_SHORT).show()
-                    binding.switchSubscription.isChecked = false // Revert the switch state
+                    binding.switchSubscription.isChecked = false
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireContext(), "Subscription failed", Toast.LENGTH_SHORT).show()
-                binding.switchSubscription.isChecked = false // Revert the switch state
+                binding.switchSubscription.isChecked = false
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "An unexpected error occurred", Toast.LENGTH_SHORT).show()
-                binding.switchSubscription.isChecked = false // Revert the switch state
+                binding.switchSubscription.isChecked = false
             } finally {
-                binding.switchSubscription.isEnabled = true // Re-enable the switch
+                binding.switchSubscription.isEnabled = true
             }
         }
     }
 
-    /**
-     * Calls the unsubscribe API to deactivate the user's subscription.
-     */
     private fun unsubscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
             val pref = UserPreference.getInstance(requireContext().dataStore)
@@ -114,16 +104,16 @@ class ProfileFragment : Fragment() {
                     pref.updateSubscriptionStatus(false)
                 } else {
                     Toast.makeText(requireContext(), "Failed to unsubscribe: ${response.message}", Toast.LENGTH_SHORT).show()
-                    binding.switchSubscription.isChecked = true // Revert the switch state
+                    binding.switchSubscription.isChecked = true
                 }
             } catch (e: HttpException) {
                 Toast.makeText(requireContext(), "Unsubscription failed", Toast.LENGTH_SHORT).show()
-                binding.switchSubscription.isChecked = true // Revert the switch state
+                binding.switchSubscription.isChecked = true
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "An unexpected error occurred", Toast.LENGTH_SHORT).show()
-                binding.switchSubscription.isChecked = true // Revert the switch state
+                binding.switchSubscription.isChecked = true
             } finally {
-                binding.switchSubscription.isEnabled = true // Re-enable the switch
+                binding.switchSubscription.isEnabled = true
             }
         }
     }

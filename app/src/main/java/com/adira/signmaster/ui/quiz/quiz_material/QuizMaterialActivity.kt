@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.Toast
 import android.widget.VideoView
@@ -31,12 +30,10 @@ class QuizMaterialActivity : AppCompatActivity() {
         binding = ActivityQuizMaterialBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set toolbar navigation icon listener
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 
-        // Ambil chapterId dan chapterTitle dari Intent
         val chapterId = intent.getIntExtra(EXTRA_CHAPTER_ID, -1)
         val chapterTitle = intent.getStringExtra(EXTRA_CHAPTER_TITLE)
 
@@ -47,13 +44,10 @@ class QuizMaterialActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        // Tampilkan judul chapter di toolbar
         binding.toolbarTitle.text = chapterTitle
 
-        // Atur ulang UI
         setupUI()
 
-        // Fetch quizzes berdasarkan chapterId
         fetchQuizzes(chapterId)
     }
 
@@ -138,7 +132,6 @@ class QuizMaterialActivity : AppCompatActivity() {
                     .into(imageView)
             }
         } else {
-            // Jika URL tidak tersedia
             Toast.makeText(imageView.context, "Konten tidak tersedia", Toast.LENGTH_SHORT).show()
             videoView.visibility = View.GONE
             imageView.visibility = View.GONE
@@ -150,7 +143,7 @@ class QuizMaterialActivity : AppCompatActivity() {
 
         buttons.forEach {
             it.visibility = View.GONE
-            it.text = "" // Hapus teks untuk tombol
+            it.text = ""
         }
         question.answers.forEachIndexed { index, answer ->
             if (index < buttons.size) {

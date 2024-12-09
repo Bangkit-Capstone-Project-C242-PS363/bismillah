@@ -29,22 +29,18 @@ import com.adira.signmaster.R
 import com.adira.signmaster.databinding.ActivityCameraTranslateBinding
 
 class CameraTranslateActivity : AppCompatActivity() {
-    // Essential UI and camera components
     private lateinit var binding: ActivityCameraTranslateBinding
     private lateinit var cameraExecutor: ExecutorService
     private var webSocketClient: WebSocketClient? = null
 
-    // Simple frame processing control
     private var isProcessingFrame = false
 
     private var lastFrameSentTime = 0L
-    private val FRAME_INTERVAL = 100L  // 100ms between frames (10 FPS)
+    private val FRAME_INTERVAL = 100L
     private var totalFramesReceived = 0
     private var totalFramesSent = 0
     private var isUsingFrontCamera = false
-    // Performance monitoring variables
 
-    // Camera permission handling using the modern activity result API
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -62,14 +58,13 @@ class CameraTranslateActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        // Initialize critical components
         setupWebSocket()
         initializeCamera()
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         binding.fabSwitchCamera.setOnClickListener {
-            isUsingFrontCamera = !isUsingFrontCamera  // Toggle camera state
-            startCamera()  // Restart camera with the new setting
+            isUsingFrontCamera = !isUsingFrontCamera
+            startCamera()
         }
     }
 
@@ -83,7 +78,6 @@ class CameraTranslateActivity : AppCompatActivity() {
     }
 
     private fun setupWebSocket() {
-//        val serverUrl = "wss://inference-model2-1032595886811.asia-southeast2.run.app/"
         val serverUrl = "wss://inference-model-kji5w4ybbq-et.a.run.app/"
         Log.d(TAG, "Initializing WebSocket connection to: $serverUrl")
 
@@ -117,7 +111,6 @@ class CameraTranslateActivity : AppCompatActivity() {
     private fun updatePredictionDisplay(predictions: JSONArray, landmarks: JSONArray?) {
         runOnUiThread {
             val predictionText = buildString {
-                // Display predictions in order of confidence
                 for (i in 0 until predictions.length()) {
                     val prediction = predictions.getJSONObject(i)
                     val sign = prediction.getString("sign")
@@ -125,7 +118,6 @@ class CameraTranslateActivity : AppCompatActivity() {
                     append("#${i + 1}: $sign (${String.format("%.2f", confidence * 100)}%)\n")
                 }
 
-                // Add landmark count if available
                 landmarks?.let {
                     append("\nDetected ${it.length()} landmarks")
                 }
@@ -140,19 +132,16 @@ class CameraTranslateActivity : AppCompatActivity() {
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
 
-            // Select camera based on current state (front or back)
             val cameraSelector = if (isUsingFrontCamera) {
                 CameraSelector.DEFAULT_FRONT_CAMERA
             } else {
                 CameraSelector.DEFAULT_BACK_CAMERA
             }
 
-            // Configure camera preview
             val preview = Preview.Builder()
                 .build()
                 .also { it.setSurfaceProvider(binding.viewFinder.surfaceProvider) }
 
-            // Configure image analysis
             val imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build()
@@ -163,7 +152,7 @@ class CameraTranslateActivity : AppCompatActivity() {
                 }
 
             try {
-                cameraProvider.unbindAll()  // Unbind previous camera use cases
+                cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
                     this,
                     cameraSelector,
@@ -178,9 +167,8 @@ class CameraTranslateActivity : AppCompatActivity() {
 
     private fun processImage(imageProxy: ImageProxy) {
         val currentTime = System.currentTimeMillis()
-        totalFramesReceived++  // Count every frame that comes from the camera
+        totalFramesReceived++
 
-        // Check if enough time has passed since the last frame was sent
         if (isProcessingFrame || currentTime - lastFrameSentTime < FRAME_INTERVAL) {
             imageProxy.close()
             return
@@ -188,23 +176,19 @@ class CameraTranslateActivity : AppCompatActivity() {
 
         try {
             isProcessingFrame = true
-            lastFrameSentTime = currentTime  // Update the last sent time
+            lastFrameSentTime = currentTime
 
-            // Convert ImageProxy to Bitmap
             val bitmap = imageProxy.toBitmap()
             val rotatedBitmap = rotateBitmap(bitmap, imageProxy.imageInfo.rotationDegrees.toFloat())
 
-            // Compress to JPEG format
             val outputStream = ByteArrayOutputStream()
             rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 75, outputStream)
 
-            // Encode as base64 string
             val base64Image = Base64.encodeToString(
                 outputStream.toByteArray(),
                 Base64.NO_WRAP
             )
 
-            // Send to server if connection is available
             webSocketClient?.takeIf { it.isOpen }?.let { client ->
                 client.send(base64Image)
                 totalFramesSent++
@@ -251,7 +235,6 @@ class CameraTranslateActivity : AppCompatActivity() {
         strokeWidth = 3f
     }
 
-    // Define the hand connections (similar to MediaPipe's HAND_CONNECTIONS)
     private val handConnections = listOf(
         // Thumb
         Pair(0, 1), Pair(1, 2), Pair(2, 3), Pair(3, 4),
@@ -276,7 +259,6 @@ class CameraTranslateActivity : AppCompatActivity() {
                 val predictions = response.getJSONArray("predictions")
                 val landmarks = response.optJSONArray("landmarks")
 
-                // Create a bitmap for drawing
                 val drawingBitmap = Bitmap.createBitmap(
                     binding.viewFinder.width,
                     binding.viewFinder.height,
@@ -284,17 +266,13 @@ class CameraTranslateActivity : AppCompatActivity() {
                 )
                 val canvas = Canvas(drawingBitmap)
 
-                // Draw landmarks if available
                 landmarks?.let {
                     drawHandLandmarks(canvas, it)
                 }
 
-                // Update UI with predictions and drawing
                 runOnUiThread {
-                    // Update prediction text
                     updatePredictionDisplay(predictions,landmarks)
 
-                    // Display the drawing overlay
                     binding.overlayView.setImageBitmap(drawingBitmap)
                 }
             } else {
@@ -312,21 +290,17 @@ class CameraTranslateActivity : AppCompatActivity() {
         val width = canvas.width.toFloat()
         val height = canvas.height.toFloat()
 
-        // Store landmark positions for drawing connections
         val points = mutableListOf<PointF>()
 
-        // Draw each landmark point
         for (i in 0 until landmarks.length()) {
             val landmark = landmarks.getJSONObject(i)
             val x = landmark.getDouble("x").toFloat() * width
             val y = landmark.getDouble("y").toFloat() * height
             points.add(PointF(x, y))
 
-            // Draw landmark point
             canvas.drawCircle(x, y, 8f, circlePaint)
         }
 
-        // Draw connections between landmarks
         for ((start, end) in handConnections) {
             if (points.size > start && points.size > end) {
                 val startPoint = points[start]

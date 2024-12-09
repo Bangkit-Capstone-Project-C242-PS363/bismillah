@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
         binding.cardTranslate.setOnClickListener {
             val intent = Intent(requireContext(), TranslateActivity::class.java)
             startActivity(intent)
-            requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left) // Add animation
+            requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
 

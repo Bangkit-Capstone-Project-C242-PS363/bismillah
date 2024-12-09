@@ -28,7 +28,6 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Sembunyikan Bottom Navigation View
         (activity as? AppCompatActivity)?.findViewById<BottomNavigationView>(R.id.nav_view)?.visibility = View.GONE
 
         val title = arguments?.getString("title")
@@ -44,7 +43,6 @@ class NewsFragment : Fragment() {
                 .placeholder(R.drawable.placeholder_image)
                 .into(imgNews)
         }
-        // Handle back button click with animation
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             requireActivity().supportFragmentManager.popBackStack()
             requireActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
