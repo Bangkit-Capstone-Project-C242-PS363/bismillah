@@ -50,5 +50,12 @@
     <string name="title_scan">Scan</string>
     <string name="news_description">News Description</string>
     <string name="splash_logo">logo</string>
+<<<<<<< HEAD
     <string name="splash_tagline">Learn with Sign Master</string>
+=======
+    <string name="splash_tagline">Learn with SignMaster</string>
+    <string name="unknown_username">unknown username</string>
+    <string name="unknown_email">unknown email</string>
+    <string name="no_internet_connection">no internet connection</string>
+>>>>>>> f57ada2 (fix no intnet)
 </resources>

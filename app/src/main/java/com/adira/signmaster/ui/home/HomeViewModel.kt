@@ -22,19 +22,24 @@ class HomeViewModel(
     private val _newsList = MutableLiveData<List<News>>()
     val newsList: LiveData<List<News>> get() = _newsList
 
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String> get() = _error
+    private val _error = MutableLiveData<String?>()
+    val error: MutableLiveData<String?> get() = _error
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
 
+    private var fetchInProgress = false
+
     fun getNews() {
+        if (fetchInProgress) return
         _loading.value = true
+        fetchInProgress = true
 
         val client = ApiConfigNews.apiServiceNews.getAllNews()
         client.enqueue(object : Callback<List<News>> {
             override fun onResponse(call: Call<List<News>>, response: Response<List<News>>) {
                 _loading.value = false
+                fetchInProgress = false
 
                 if (response.isSuccessful && response.body() != null) {
                     _newsList.value = response.body()
@@ -45,9 +50,18 @@ class HomeViewModel(
 
             override fun onFailure(call: Call<List<News>>, t: Throwable) {
                 _loading.value = false
+<<<<<<< HEAD
                 _error.value = "Error occurred: ${t.message}"
+=======
+                fetchInProgress = false
+                _error.value = "Terjadi kesalahan: ${t.message}"
+>>>>>>> f57ada2 (fix no intnet)
             }
         })
+    }
+
+    fun resetError() {
+        _error.value = null
     }
 }
 
