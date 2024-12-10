@@ -47,15 +47,11 @@ class HomeViewModel(
                     _error.value = "Failed to load news: ${response.message()}"
                 }
             }
-
             override fun onFailure(call: Call<List<News>>, t: Throwable) {
                 _loading.value = false
-<<<<<<< HEAD
                 _error.value = "Error occurred: ${t.message}"
-=======
                 fetchInProgress = false
-                _error.value = "Terjadi kesalahan: ${t.message}"
->>>>>>> f57ada2 (fix no intnet)
+                _error.value = "Error occurred: ${t.message}"
             }
         })
     }

@@ -144,7 +144,7 @@ class CameraTranslateActivity : AppCompatActivity() {
             }
             val preview = Preview.Builder()
                 .build()
-                .also { it.setSurfaceProvider(binding.viewFinder.surfaceProvider) }
+                .also { it.surfaceProvider = binding.viewFinder.surfaceProvider }
 
             // Configure image analysis
             val imageAnalyzer = ImageAnalysis.Builder()

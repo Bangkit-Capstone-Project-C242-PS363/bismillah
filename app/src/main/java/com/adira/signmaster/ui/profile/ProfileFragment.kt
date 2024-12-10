@@ -104,7 +104,7 @@ class ProfileFragment : Fragment() {
                 if (!response.error) {
                     pref.updateSubscriptionStatus(true)
                 } else {
-                    Toast.makeText(requireContext(), response.message ?: "Subscription failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
                     resetSwitchState(false)
                 }
             } catch (e: HttpException) {
@@ -134,7 +134,7 @@ class ProfileFragment : Fragment() {
                 if (!response.error) {
                     pref.updateSubscriptionStatus(false)
                 } else {
-                    Toast.makeText(requireContext(), response.message ?: "Unsubscription failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
                     resetSwitchState(true)
                 }
             } catch (e: HttpException) {

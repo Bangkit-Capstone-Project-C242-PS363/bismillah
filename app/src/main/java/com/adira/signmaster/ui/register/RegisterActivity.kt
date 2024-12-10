@@ -54,7 +54,6 @@ class RegisterActivity : AppCompatActivity() {
 
             registerViewModel.registerResult.observe(this) { result ->
                 binding.progressBar.visibility = View.GONE
-
                 when (result) {
                     is Result.Success -> {
                         Toast.makeText(this, getString(R.string.signup_success), Toast.LENGTH_SHORT).show()
@@ -68,7 +67,6 @@ class RegisterActivity : AppCompatActivity() {
                             }
                         }
                     }
-
                     else -> {
                         Toast.makeText(this, getString(R.string.signup_failed), Toast.LENGTH_SHORT).show()
                     }
