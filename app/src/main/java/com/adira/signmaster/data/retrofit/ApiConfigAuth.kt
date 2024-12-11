@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfigAuth {
-    private const val BASE_URL = "https://signmaster-auth-304278585381.asia-southeast2.run.app/"
+    private const val BASE_URL = "https://signmaster-auth-kji5w4ybbq-et.a.run.app/"
 
     fun getApiServiceAuth(token: String): ApiServiceAuth {
         val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
