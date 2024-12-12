@@ -2,6 +2,7 @@ package com.adira.signmaster.ui.quiz.quiz_menu_fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +52,7 @@ class QuizMenuFragment : Fragment() {
         val intent = Intent(requireContext(), QuizMaterialActivity::class.java).apply {
             putExtra(QuizMaterialActivity.EXTRA_CHAPTER_ID, chapterId)
             putExtra(QuizMaterialActivity.EXTRA_CHAPTER_TITLE, chapterTitle)
+            Log.d("QuizMenuFragment", "Navigating to QuizMaterialActivity with chapterId: $chapterId")
         }
         startActivity(intent)
         activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

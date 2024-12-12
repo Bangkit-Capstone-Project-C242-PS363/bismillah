@@ -7,12 +7,14 @@ import kotlinx.parcelize.Parcelize
         val id: Int,
         val title: String,
         val icon_url: String,
-        val locked: Boolean
+        val locked: Boolean,
+        val completed: Boolean
     )
 
     data class ChapterResponse(
         val error: Boolean,
         val message: String,
+        val certificate_url: String?, // Nullable because the URL is only available when all chapters are complete
         val data: List<Chapter>
     )
 
@@ -36,4 +38,14 @@ import kotlinx.parcelize.Parcelize
         val error: Boolean,
         val message: String,
         val data: List<Quiz>
+    )
+
+data class CompleteChapterRequest(
+    val chapter_id: Int
+)
+
+    data class CompleteChapterResponse(
+        val error: Boolean,
+        val message: String,
+        val certificate_url: String? // Nullable because the URL is only available when all chapters are complete
     )

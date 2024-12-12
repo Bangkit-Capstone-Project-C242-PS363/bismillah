@@ -25,6 +25,7 @@ class QuizMaterialActivity : AppCompatActivity() {
     private var currentQuestionIndex = 0
     private var correctAnswersCount = 0
 
+    private var chapterId: Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuizMaterialBinding.inflate(layoutInflater)
@@ -34,8 +35,12 @@ class QuizMaterialActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        val chapterId = intent.getIntExtra(EXTRA_CHAPTER_ID, -1)
+        chapterId = intent.getIntExtra(EXTRA_CHAPTER_ID, -1)
         val chapterTitle = intent.getStringExtra(EXTRA_CHAPTER_TITLE)
+
+        // **Log the captured chapterId for debugging purposes**
+        Log.d("QuizMaterialActivity", "Received chapterId: $chapterId, chapterTitle: $chapterTitle")
+
 
         if (chapterId == -1 || chapterTitle.isNullOrEmpty()) {
             showErrorAndExit("Invalid chapter data")
@@ -199,7 +204,10 @@ class QuizMaterialActivity : AppCompatActivity() {
         binding.btn4.visibility = View.GONE
         binding.fabRepeatQuiz.visibility = View.GONE
 
-        val fragment = QuizResultFragment.newInstance(quizList, correctAnswersCount)
+        Log.d("QuizMaterialActivity", "Navigating to QuizResultFragment with chapterId: $chapterId")
+
+
+        val fragment = QuizResultFragment.newInstance(quizList, correctAnswersCount, chapterId)
         supportFragmentManager.beginTransaction()
             .replace(R.id.main, fragment)
             .addToBackStack(null)
