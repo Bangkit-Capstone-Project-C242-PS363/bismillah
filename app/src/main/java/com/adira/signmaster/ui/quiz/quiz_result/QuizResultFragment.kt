@@ -64,7 +64,6 @@ class QuizResultFragment : Fragment() {
         // If score is 80 or higher, mark the chapter as completed
         if (scorePercentage >= 80) {
             updateChapterCompletionStatus()
-            markChapterAsCompleted()
             Toast.makeText(context, "Congratulations! You scored $scorePercentage%", Toast.LENGTH_SHORT).show()
         } else {
             view.findViewById<TextView>(R.id.tvQuizResult).text =
