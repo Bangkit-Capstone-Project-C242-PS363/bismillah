@@ -39,7 +39,7 @@ class MaterialListViewModel : ViewModel() {
             } catch (e: Exception) {
                 _errorMessage.postValue("Unexpected Error: ${e.message}")
             } finally {
-                _loading.value = false // Sembunyikan ProgressBar
+                _loading.value = false
             }
         }
     }

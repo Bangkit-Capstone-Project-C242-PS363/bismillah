@@ -12,7 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeViewModel(
-    private val authRepository: RepositoryAuth,
+    private val authRepository: RepositoryAuth
 ) : ViewModel() {
 
     fun getUsername(): LiveData<String> {
@@ -23,42 +23,37 @@ class HomeViewModel(
     val newsList: LiveData<List<News>> get() = _newsList
 
     private val _error = MutableLiveData<String?>()
-    val error: MutableLiveData<String?> get() = _error
+    val error: LiveData<String?> get() = _error
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
 
-    private var fetchInProgress = false
+    private val _isNewsFetched = MutableLiveData(false)
+    val isNewsFetched: LiveData<Boolean> get() = _isNewsFetched
 
     fun getNews() {
-        if (fetchInProgress) return
-        _loading.value = true
-        fetchInProgress = true
+        if (_isNewsFetched.value == true) return
 
+        _loading.value = true
         val client = ApiConfigNews.apiServiceNews.getAllNews()
         client.enqueue(object : Callback<List<News>> {
             override fun onResponse(call: Call<List<News>>, response: Response<List<News>>) {
                 _loading.value = false
-                fetchInProgress = false
-
                 if (response.isSuccessful && response.body() != null) {
                     _newsList.value = response.body()
+                    _isNewsFetched.value = true
                 } else {
                     _error.value = "Failed to load news: ${response.message()}"
                 }
             }
+
             override fun onFailure(call: Call<List<News>>, t: Throwable) {
                 _loading.value = false
-                _error.value = "Error occurred: ${t.message}"
-                fetchInProgress = false
                 _error.value = "Error occurred: ${t.message}"
             }
         })
     }
-
-    fun resetError() {
-        _error.value = null
-    }
 }
+
 
 

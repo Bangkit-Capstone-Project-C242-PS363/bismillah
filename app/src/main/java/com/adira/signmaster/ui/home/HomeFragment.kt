@@ -1,15 +1,11 @@
 package com.adira.signmaster.ui.home
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -69,31 +65,12 @@ class HomeFragment : Fragment() {
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
-        setupSwipeRefresh()
+        homeViewModel.getNews()
+
         observeNews()
         checkSubscriptionStatus()
 
-        binding.swipeRefreshLayout.isRefreshing = true
-        fetchNews()
-    }
 
-    private fun setupSwipeRefresh() {
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            if (isInternetAvailable(requireContext())) {
-                fetchNews()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.no_internet_connection),
-                    Toast.LENGTH_SHORT
-                ).show()
-                binding.swipeRefreshLayout.isRefreshing = false
-            }
-        }
-    }
-
-    private fun fetchNews() {
-        homeViewModel.getNews()
     }
 
     private fun observeNews() {
@@ -104,15 +81,6 @@ class HomeFragment : Fragment() {
                 adapter = newsAdapter
                 layoutManager = LinearLayoutManager(requireContext())
             }
-            binding.swipeRefreshLayout.isRefreshing = false
-        }
-
-        homeViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            if (!errorMessage.isNullOrEmpty() && isInternetAvailable(requireContext())) {
-                Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-                homeViewModel.resetError()
-            }
-            binding.swipeRefreshLayout.isRefreshing
         }
     }
 
@@ -135,13 +103,6 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun isInternetAvailable(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-    }
 }
 
 

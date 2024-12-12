@@ -13,6 +13,7 @@ import com.adira.signmaster.data.pref.dataStore
 import com.adira.signmaster.databinding.ActivityMainBinding
 import com.adira.signmaster.ui.login.LoginActivity
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -26,8 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         pref = UserPreference.getInstance(applicationContext.dataStore)
         lifecycleScope.launch {
-            val user = pref.getLoginStatus().first()
-            if (user.token.isEmpty()) {
+            val user = pref.getLoginStatus().firstOrNull()
+            if (user == null || user.token.isEmpty()) {
                 navigateToLogin()
             } else {
                 setupView()

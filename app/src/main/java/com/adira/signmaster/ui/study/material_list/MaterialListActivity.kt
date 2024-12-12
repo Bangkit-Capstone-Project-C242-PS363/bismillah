@@ -2,6 +2,7 @@ package com.adira.signmaster.ui.study.material_list
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -62,25 +63,28 @@ class MaterialListActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.chapterDetails.observe(this, Observer { chapterDetail ->
+        viewModel.loading.observe(this) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        viewModel.chapterDetails.observe(this) { chapterDetail ->
             Glide.with(this)
                 .load(chapterDetail.chapterImageUrl)
                 .into(binding.ivMaterialList)
             adapter.submitList(chapterDetail.materials)
-        })
+        }
 
-        viewModel.errorMessage.observe(this, Observer { message ->
+        viewModel.errorMessage.observe(this) { message ->
             if (message != null) {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
-
 }
 
 
