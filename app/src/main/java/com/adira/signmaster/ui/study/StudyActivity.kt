@@ -6,21 +6,33 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adira.signmaster.R
+import com.adira.signmaster.data.response.Chapter
+import com.adira.signmaster.data.room.dao.StudyDao
+import com.adira.signmaster.data.room.database.StudyDatabase
+import com.adira.signmaster.data.room.entity.StudyEntity
 import com.adira.signmaster.databinding.ActivityStudyBinding
 import com.adira.signmaster.ui.study.material_list.MaterialListActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class StudyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStudyBinding
     private val viewModel: StudyViewModel by viewModels()
     private lateinit var adapter: LearnMaterialAdapter
+    private lateinit var studyDao: StudyDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStudyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+        val database = StudyDatabase.getInstance(this)
+        studyDao = database.studyDao()
 
         binding.ivBack.setOnClickListener {
             onBackPressed()
@@ -35,9 +47,12 @@ class StudyActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = LearnMaterialAdapter { chapter ->
-            navigateToMaterialList(chapter)
-        }
+        adapter = LearnMaterialAdapter(
+            onItemClick = { chapter ->
+                navigateToMaterialList(chapter)
+            },
+            studyDao = studyDao
+        )
 
         binding.rvLearnMaterial.layoutManager = LinearLayoutManager(this)
         binding.rvLearnMaterial.adapter = adapter
@@ -76,4 +91,9 @@ class StudyActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }
+
+
+
+
+
 

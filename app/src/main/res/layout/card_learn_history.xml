@@ -53,7 +53,7 @@
             android:id="@+id/ivSaveMaterial"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/baseline_bookmark_border"
+            android:src="@drawable/baseline_bookmark_24"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"

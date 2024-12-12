@@ -18,6 +18,7 @@ import com.adira.signmaster.data.pref.dataStore
 import com.adira.signmaster.data.retrofit.ApiConfigAuth
 import com.adira.signmaster.databinding.FragmentProfileBinding
 import com.adira.signmaster.ui.login.LoginActivity
+import com.adira.signmaster.ui.profile.history_study.StudyHistoryActivity
 import com.adira.signmaster.ui.viewmodelfactory.ViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.firstOrNull
@@ -77,6 +78,16 @@ class ProfileFragment : Fragment() {
         binding?.tvLogout?.setOnClickListener {
             showLogoutConfirmationDialog()
         }
+
+        binding?.tvHistoryLearn?.setOnClickListener {
+            navigateToStudyHistory()
+        }
+    }
+
+    private fun navigateToStudyHistory() {
+        val intent = Intent(requireContext(), StudyHistoryActivity::class.java)
+        startActivity(intent)
+        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     private fun handleSubscriptionChange(isSubscribed: Boolean) {
