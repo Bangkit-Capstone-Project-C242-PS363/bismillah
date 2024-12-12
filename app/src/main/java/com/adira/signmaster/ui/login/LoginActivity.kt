@@ -33,7 +33,6 @@ class LoginActivity : AppCompatActivity() {
             navigateToRegister()
 
         }
-
         setupAction()
         playAnimation()
     }

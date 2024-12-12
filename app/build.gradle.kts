@@ -80,7 +80,6 @@ dependencies {
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
 
-    implementation (libs.androidx.swiperefreshlayout)
 
 
 }
